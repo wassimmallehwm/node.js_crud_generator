@@ -5,6 +5,7 @@ import { EntityButton } from '../EntityButton'
 import xIcon from '../../../assets/x.svg';
 import initSettings from '../../../initial_settings.json';
 import { Select } from '../../shared';
+import { useEffect } from 'react';
 
 interface FieldItemProps {
     field: Field;
@@ -43,6 +44,14 @@ const FieldItem = ({
     const handleRefChange = (e: any) => {
         onFieldTypeChange("field_ref", e.target.value, index)
     }
+
+    useEffect(() => {
+        if(field.field_type && field.field_type != ""){
+            const type = initSettings.field_types.find(elem => elem.type == field.field_type)
+            setFieldType(type);
+            setComplexType(type!.complex);
+        }
+    }, [])
 
     return (
         <div className="d-flex" style={{

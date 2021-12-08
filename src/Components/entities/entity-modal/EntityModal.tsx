@@ -142,7 +142,8 @@ const EntityModal = ({
                 <Button variant="secondary" onClick={closeModal}>
                     Cancel
                 </Button>
-                <Button disabled={!entity.entity_name || entity.entity_fields.length <= 0} variant="primary" onClick={save}>
+                <Button disabled={!entity.entity_name || entity.entity_fields.length <= 0}
+                    variant="primary" onClick={save}>
                     Save Changes
                 </Button>
             </Modal.Footer>
