@@ -9,6 +9,9 @@ import AppSettings from './Components/app-settings/AppSettings';
 import Entities from './Components/entities/Entities';
 import { Entity } from './types/Entity';
 import { useEffect } from 'react';
+import JSZip from "jszip";
+import { AppGenerator } from './Components/app-generator/AppGenerator';
+const { saveAs } = require('save-as');
 
 function App() {
   const [settings, setSettings] = useState<Settings>(new Settings(initSettings.init_settings));
@@ -23,11 +26,16 @@ function App() {
 
   useEffect(() => {
     let res: string[] = [];
-    for(let entity of entities){
+    for (let entity of entities) {
       res.push(entity.entity_name)
     }
     setEntitiesLabels(res);
   }, [entities])
+
+  const generateApp = () => {
+    AppGenerator.generateApp(entities, settings);
+    console.log(settings)
+  }
 
 
   return (
@@ -36,15 +44,15 @@ function App() {
         <h1>Node.js/Express CRUD generator</h1>
       </Row>
       <div className="d-flex flex-row flex-wrap">
-        <div className="p-1 col-md-8" style={{maxHeight: '400px'}}>
+        <div className="p-1 col-md-8" style={{ maxHeight: '400px' }}>
           <AppSettings settings={settings} setSettings={setSettings} onChangeSettings={onChangeSettings} />
         </div>
-        <div className="p-1 col-md-4" style={{maxHeight: '400px'}}>
+        <div className="p-1 col-md-4" style={{ maxHeight: '400px' }}>
           <Entities entitiesLabels={entitiesLabels} entities={entities} setEntities={setEntities} />
         </div>
       </div>
       <div className="d-flex flex-row flex-wrap mt-4 px-3">
-        <Button onClick={() => console.info('Settings : ', settings, ' Entities : ', entities)} variant="success" style={{boxShadow: '1px 1px 4px 1px rgb(0 0 0 / 20%)'}} >
+        <Button onClick={generateApp} variant="success" style={{ boxShadow: '1px 1px 4px 1px rgb(0 0 0 / 20%)' }} >
           Generate
         </Button>
       </div>

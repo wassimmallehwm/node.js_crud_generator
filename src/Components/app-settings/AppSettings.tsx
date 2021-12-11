@@ -5,6 +5,7 @@ import { ShadowBox, Select, MultipleSelect } from '../shared';
 import { Settings } from '../../types/Settings';
 import initSettings from '../../initial_settings.json';
 import { useEffect } from 'react';
+import { Dependency } from '../../types/Dependency';
 
 interface AppSettingsProps {
     settings: Settings;
@@ -19,7 +20,6 @@ const AppSettings = ({
 }: AppSettingsProps) => {
     const apiService = useRef(new APIService());
     const [options, setOptions] = useState<any>([]);
-    const test = [{ name: "wess", version: "1.0" }, { name: "wess", version: "2.0" }]
     const [optionsLoading, setOptionsLoading] = useState<boolean>(false);
     const [dbOrmOptions, setDbOrmOptions] = useState<string[]>([]);
 
@@ -34,12 +34,9 @@ const AppSettings = ({
     }, [])
 
     const handlePackSelectChange = (selected: any[]) => {
-        let tab: any[] = [];
+        let tab: Dependency[] = [];
         selected.forEach(element => {
-            tab.push({
-                name: element.name,
-                version: element.version
-            })
+            tab.push(new Dependency(element))
         });
         setSettings((prev: Settings) => ({
             ...prev,

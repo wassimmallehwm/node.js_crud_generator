@@ -91,7 +91,7 @@ const EntityModal = ({
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    New entity
+                    Entity settings
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
