@@ -9,8 +9,7 @@ export class AppGenerator {
 
     static generateApp(entities: Entity[], settings: Settings) {
         var zip = new JSZip();
-        var src = zip.folder("src");
-        var controllers = src?.folder("controllers");
+        var controllers = zip.folder("controllers");
         // if (entity.current) {
         //   controllers.file(`${entity.current.entity.name}Controller.js`, ControllerGenerator.getTemplate(entity.current.entity, settings.current));
         // }
