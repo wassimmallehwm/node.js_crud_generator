@@ -7,7 +7,7 @@ class ModelsGenerator {
     static generateModel(entities: Entity[], directory: JSZip){
         var models = directory?.folder("models");
         entities.forEach(entity => {
-            models?.file(`${entity.entity_name}.js`, modelTemplate(entity));
+            models?.file(`${entity.entity_name.toLocaleLowerCase()}.js`, modelTemplate(entity));
         })
     }
 }

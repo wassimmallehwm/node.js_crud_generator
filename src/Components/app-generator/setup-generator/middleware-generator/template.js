@@ -1,4 +1,10 @@
-const middlewareTemplate = () => {
+const middlewareTemplate = (entities) => {
+
+  let entitiesRoutes = '';
+  entities.forEach(elem => {
+    entitiesRoutes += `app.use('/api/${elem.entity_name}', require('../routers/${elem.entity_name}.routes'))
+    `;
+  });
 
   return `const express = require('express');
 const cors = require('cors');
@@ -10,6 +16,8 @@ const globalMiddelwares = (app, dir) => {
   app.use(cors());
   app.use(express.json());
   app.use(morgan('dev'));
+
+  ${entitiesRoutes}
 }
 
 module.exports = globalMiddelwares;`

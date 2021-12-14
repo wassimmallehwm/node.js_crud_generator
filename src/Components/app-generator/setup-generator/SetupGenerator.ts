@@ -1,4 +1,5 @@
 import JSZip from "jszip";
+import { Entity } from "../../../types/Entity";
 import { Settings } from "../../../types/Settings";
 import { DatabaseGenerator } from "./database-generator";
 import { EnvGenerator } from "./env-generator";
@@ -8,14 +9,14 @@ import { PackageGenerator } from "./package-generator";
 
 class SetupGenerator {
 
-    static generateSetup(settings: Settings, directory: JSZip){
+    static generateSetup(settings: Settings, entities: Entity[], directory: JSZip){
         directory?.folder("public");
         directory.file("package.json", PackageGenerator.generatePackage(settings));
         directory.file(".env", EnvGenerator.generateEnv(settings));
         directory.file("index.js", IndexGenerator.generateIndex(settings));
         
         DatabaseGenerator.generateDatabase(settings, directory);
-        MiddlewareGenerator.generateMiddleware(settings, directory);
+        MiddlewareGenerator.generateMiddleware(settings, entities, directory);
         
         directory.file(".gitignore", `/node_modules
         .env`);

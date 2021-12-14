@@ -9,7 +9,7 @@ export class AppGenerator {
 
   static generateApp(entities: Entity[], settings: Settings) {
     var zip = new JSZip();
-    SetupGenerator.generateSetup(settings, zip);
+    SetupGenerator.generateSetup(settings, entities, zip);
     EntitiesGenerator.generateEntities(entities, settings, zip);
     zip.generateAsync({ type: "blob" })
       .then(function (content: any) {
