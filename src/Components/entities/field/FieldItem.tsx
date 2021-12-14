@@ -4,7 +4,7 @@ import { Field } from '../../../types/Field'
 import { EntityButton } from '../EntityButton'
 import xIcon from '../../../assets/x.svg';
 import initSettings from '../../../initial_settings.json';
-import { Select } from '../../shared';
+import { Select, Switch } from '../../shared';
 import { useEffect } from 'react';
 
 interface FieldItemProps {
@@ -46,10 +46,13 @@ const FieldItem = ({
     }
 
     useEffect(() => {
-        if(field.field_type && field.field_type != ""){
+        if (field.field_type && field.field_type != "") {
             const type = initSettings.field_types.find(elem => elem.type == field.field_type)
             setFieldType(type);
             setComplexType(type!.complex);
+        } else {
+            setFieldType(initSettings.field_types[0]);
+            onFieldTypeChange("field_type", initSettings.field_types[0].type, index)
         }
     }, [])
 
@@ -91,20 +94,36 @@ const FieldItem = ({
             />
             {complexType ? (
                 <Select
-                style={{ width: "fit-content" }}
-                options={entitiesLabels.filter((elem: string) => elem != entityName)}
-                name="field_ref"
-                value={field.field_ref}
-                onChange={handleRefChange}
-            />
+                    style={{ width: "fit-content" }}
+                    options={entitiesLabels.filter((elem: string) => elem != entityName)}
+                    name="field_ref"
+                    value={field.field_ref}
+                    onChange={handleRefChange}
+                />
             ) : null}
             <Form.Group id="formGridCheckbox">
-                <Form.Check name="field_required" checked={field.field_required}
-                    onChange={(e: any) => handleChange(e, true)} type="checkbox" label="Required" />
+                <div className="d-flex mt-2 flex-row align-items-center">
+                    <div>
+                        <Switch
+                            name="field_required"
+                            onChange={(e: any) => handleChange(e, true)}
+                            checked={field.field_required}
+                        />
+                    </div>
+                    <p className="ml-1 mb-2">Required</p>
+                </div>
             </Form.Group>
             <Form.Group id="formGridCheckbox">
-                <Form.Check name="field_unique" checked={field.field_unique}
-                    onChange={(e: any) => handleChange(e, true)} type="checkbox" label="Unique" />
+                <div className="d-flex mt-2 flex-row align-items-center">
+                    <div>
+                        <Switch
+                            name="field_unique"
+                            onChange={(e: any) => handleChange(e, true)}
+                            checked={field.field_unique}
+                        />
+                    </div>
+                    <p className="ml-1 mb-2">Unique</p>
+                </div>
             </Form.Group>
             <EntityButton className="mx-1" onClick={() => onFieldRemove(index)} color="#dc3545" hover="#d50014">
                 <img src={xIcon}

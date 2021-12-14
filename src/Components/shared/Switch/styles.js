@@ -40,11 +40,11 @@ const StyledSwitchContainer = styled.div`
     transition: all 0.3s ease-in 0s;
   }
   .onoffswitch-checkbox:checked + .onoffswitch-label {
-    background-color: #49e845;
+    background-color: #007bff;
   }
   .onoffswitch-checkbox:checked + .onoffswitch-label,
   .onoffswitch-checkbox:checked + .onoffswitch-label:before {
-    border-color: #49e845;
+    border-color: #007bff;
   }
   .onoffswitch-checkbox:checked + .onoffswitch-label:before {
     right: 0px;

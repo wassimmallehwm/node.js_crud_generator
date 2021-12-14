@@ -1,12 +1,12 @@
 import JSZip from "jszip";
 import { Entity } from "../../../types/Entity";
 import { Settings } from "../../../types/Settings";
+import { ModelsGenerator } from "./mongodb/mongoose/models-generator";
 
 class EntitiesGenerator {
 
     static generateEntities(entities: Entity[], settings: Settings, directory: JSZip){
-        console.log("Entity generator : ", entities);
-        console.log("Entity generator : ", settings);
+        ModelsGenerator.generateModel(entities, directory);
     }
 }
 

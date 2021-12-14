@@ -22,6 +22,7 @@ function Switch(props) {
         value={"checked"}
         checked={checked}
         onChange={handleChange}
+        {...props}
       />
       <label className="onoffswitch-label" htmlFor={id}></label>
     </StyledSwitchContainer>

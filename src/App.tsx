@@ -32,9 +32,15 @@ function App() {
     setEntitiesLabels(res);
   }, [entities])
 
+  const invalidAction = () => {
+    return settings.project_name.trim() == "";
+  }
+
   const generateApp = () => {
-    AppGenerator.generateApp(entities, settings);
-    console.log(settings)
+    if(!invalidAction()){
+      AppGenerator.generateApp(entities, settings);
+    }
+    console.log(settings, entities)
   }
 
 
@@ -52,7 +58,7 @@ function App() {
         </div>
       </div>
       <div className="d-flex flex-row flex-wrap mt-4 px-3">
-        <Button onClick={generateApp} variant="success" style={{ boxShadow: '1px 1px 4px 1px rgb(0 0 0 / 20%)' }} >
+        <Button disabled={invalidAction()} onClick={generateApp} variant="success" style={{ boxShadow: '1px 1px 4px 1px rgb(0 0 0 / 20%)' }} >
           Generate
         </Button>
       </div>

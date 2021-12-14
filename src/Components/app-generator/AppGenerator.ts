@@ -7,17 +7,13 @@ const { saveAs } = require('save-as');
 
 export class AppGenerator {
 
-    static generateApp(entities: Entity[], settings: Settings) {
-        var zip = new JSZip();
-        var controllers = zip.folder("controllers");
-        // if (entity.current) {
-        //   controllers.file(`${entity.current.entity.name}Controller.js`, ControllerGenerator.getTemplate(entity.current.entity, settings.current));
-        // }
-        SetupGenerator.generateSetup(settings, zip);
-        EntitiesGenerator.generateEntities(entities, settings, zip);
-        zip.generateAsync({ type: "blob" })
-          .then(function (content: any) {
-            saveAs(content, settings.project_name + ".zip");
-          });
-    }
+  static generateApp(entities: Entity[], settings: Settings) {
+    var zip = new JSZip();
+    SetupGenerator.generateSetup(settings, zip);
+    EntitiesGenerator.generateEntities(entities, settings, zip);
+    zip.generateAsync({ type: "blob" })
+      .then(function (content: any) {
+        saveAs(content, settings.project_name + ".zip");
+      });
+  }
 }

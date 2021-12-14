@@ -20,7 +20,6 @@ const Entities = ({
 }: EntitiesProps) => {
     const [currentEntity, setCurrentEntity] = useState<Entity>();
     const [showModal, setShowModal] = useState<boolean>(false);
-    const [editEntityIndex, setEditEntityIndex] = useState<number>();
     const [editMode, setEditMode] = useState<boolean>(false);
 
     const closeModal = () => {
@@ -39,7 +38,7 @@ const Entities = ({
     const onEntitySave = () => {
         if(editMode){
             setEntities((prev: Entity[]) => (prev.map((elem, i) => {
-                if(editEntityIndex === i){
+                if(elem.entity_id === currentEntity?.entity_id){
                     return currentEntity;
                 }
             })))
@@ -54,7 +53,6 @@ const Entities = ({
     }
 
     const editEntity = (index: number) => {
-        setEditEntityIndex(index);
         setCurrentEntity(entities[index])
         setEditMode(true)
         openModal()

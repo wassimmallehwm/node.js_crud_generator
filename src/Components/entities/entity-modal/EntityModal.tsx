@@ -6,6 +6,7 @@ import { EntityButton } from '../EntityButton';
 import FieldItem from '../field/FieldItem';
 import initSettings from '../../../initial_settings.json'
 import { Field } from '../../../types/Field';
+import { Switch } from '../../shared';
 
 interface EntityModalProps {
     show: boolean;
@@ -40,7 +41,7 @@ const EntityModal = ({
                     if (index == i) {
                         return {
                             ...field,
-                            [e.target.name]: checkbox? !field[e.target.name] : e.target.value
+                            [e.target.name]: checkbox ? !field[e.target.name] : e.target.value
                         }
                     }
                     return field
@@ -110,14 +111,37 @@ const EntityModal = ({
                     </div>
                     <div className="p-2 col-3">
                         <Form.Group id="formGridCheckbox">
-                            <Form.Check name="entity_timestamp" checked={entity.entity_timestamp}
-                                onChange={handleCheckBoxChange} type="checkbox" label="Timestamp" />
+                            {/* <Form.Check name="entity_timestamp" checked={entity.entity_timestamp}
+                                onChange={handleCheckBoxChange} type="checkbox" label="Timestamp" /> */}
+                            <div className="d-flex mt-2 flex-row align-items-center">
+                                <div>
+                                    <Switch
+                                        name="entity_timestamp"
+                                        onChange={handleCheckBoxChange}
+                                        checked={entity.entity_timestamp}
+                                        label="Timestamp"
+                                    />
+                                </div>
+                                <p className="ml-1 mb-2">Timestamp</p>
+                            </div>
                         </Form.Group>
                     </div>
                     <div className="p-2 col-3">
                         <Form.Group id="formGridCheckbox">
-                            <Form.Check name="entity_paginated" checked={entity.entity_paginated}
-                                onChange={handleCheckBoxChange} type="checkbox" label="Paginated" />
+                            <div className="d-flex mt-2 flex-row align-items-center">
+                                <div>
+                                    <Switch
+                                        name="entity_paginated"
+                                        onChange={handleCheckBoxChange}
+                                        checked={entity.entity_paginated}
+                                        label="Paginated"
+                                    />
+                                </div>
+                                <p className="ml-1 mb-2">Paginated</p>
+                            </div>
+
+                            {/* <Form.Check name="entity_paginated" checked={entity.entity_paginated}
+                                onChange={handleCheckBoxChange} type="checkbox" label="Paginated" /> */}
                         </Form.Group>
                     </div>
                 </Row>
@@ -131,7 +155,7 @@ const EntityModal = ({
                     {entity.entity_fields && entity.entity_fields.map(
                         (field, i) => (
                             <FieldItem key={i} index={i} field={field} onFieldTypeChange={onFieldTypeChange}
-                                onFieldChange={onFieldChange} onFieldRemove={onFieldRemove} 
+                                onFieldChange={onFieldChange} onFieldRemove={onFieldRemove}
                                 entitiesLabels={entitiesLabels} entityName={entity.entity_name}
                             />
                         )

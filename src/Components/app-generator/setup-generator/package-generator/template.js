@@ -1,21 +1,21 @@
 import initSettings from '../../../../initial_settings.json'
 const packTemplate = (settings) => {
     let dependencies = '';
+    let depArray = settings.dependencies;
 
     initSettings.init_dependencies.forEach(element => {
-        if(!settings.dependencies.find(elem => elem.name === element.name)){
-            settings.dependencies.push(element)
-        }
+      if(!depArray.find(elem => elem.name === element.name)){
+        depArray.push(element)
+      }
     });
-    if (settings.dependencies.length > 0) {
-        settings.dependencies.forEach((element, i) => {
-            dependencies += settings.dependencies.length - 1 == i ?
+    if (depArray.length > 0) {
+        depArray.forEach((element, i) => {
+            dependencies += depArray.length - 1 == i ?
         `"${element.name}" : "${element.version}"` : 
         `"${element.name}" : "${element.version}",
         `
         });
     }
-
 
     return `
     {
