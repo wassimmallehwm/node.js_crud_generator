@@ -1,14 +1,18 @@
 import JSZip from "jszip";
 import { Entity } from "../../../types/Entity";
 import { Settings } from "../../../types/Settings";
-import { ControllersGenerator } from "./mongodb/mongoose/controllers-generator";
-import { ModelsGenerator } from "./mongodb/mongoose/models-generator";
+
 
 class EntitiesGenerator {
 
-    static generateEntities(entities: Entity[], settings: Settings, directory: JSZip){
+    static async generateEntities(entities: Entity[], settings: Settings, directory: JSZip){
+        const { ControllersGenerator } = await import(`./${settings.database}/${settings.database_orm}/controllers-generator`);
+        const { ModelsGenerator } = await import(`./${settings.database}/${settings.database_orm}/models-generator`);
+        const { RoutesGenerator } = await import(`./${settings.database}/${settings.database_orm}/routes-generator`);
+        
         ModelsGenerator.generateModel(entities, directory);
         ControllersGenerator.generateControllers(entities, directory);
+        RoutesGenerator.generateRoute(entities, directory)
     }
 }
 

@@ -19,7 +19,7 @@ const packTemplate = (settings) => {
 
     return `
     {
-      "name": "${settings.project_name}",
+      "name": "${settings.project_name.replace(' ', '-')}",
       "version": "1.0.0",
       "description": "",
       "main": "index.js",

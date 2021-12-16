@@ -2,8 +2,8 @@ const middlewareTemplate = (entities) => {
 
   let entitiesRoutes = '';
   entities.forEach(elem => {
-    entitiesRoutes += `app.use('/api/${elem.entity_name}', require('../routers/${elem.entity_name}.routes'))
-    `;
+    entitiesRoutes += `app.use('/api/${elem.entity_name.toLowerCase()}', require('../routes/${elem.entity_name.toLowerCase()}.routes'))
+  `;
   });
 
   return `const express = require('express');

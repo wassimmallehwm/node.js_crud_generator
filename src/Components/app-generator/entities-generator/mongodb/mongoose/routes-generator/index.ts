@@ -1,2 +1,2 @@
-import ModelsGenerator from "./RoutesGenerator";
-export { ModelsGenerator };
+import RoutesGenerator from "./RoutesGenerator";
+export { RoutesGenerator };
