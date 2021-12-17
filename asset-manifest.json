@@ -1,0 +1,34 @@
+{
+  "files": {
+    "main.css": "/wassimmallehwm/node.js_crud_generator/static/css/main.0ebd375e.chunk.css",
+    "main.js": "/wassimmallehwm/node.js_crud_generator/static/js/main.24f800b5.chunk.js",
+    "main.js.map": "/wassimmallehwm/node.js_crud_generator/static/js/main.24f800b5.chunk.js.map",
+    "runtime-main.js": "/wassimmallehwm/node.js_crud_generator/static/js/runtime-main.f17bd927.js",
+    "runtime-main.js.map": "/wassimmallehwm/node.js_crud_generator/static/js/runtime-main.f17bd927.js.map",
+    "static/css/2.e107cfe9.chunk.css": "/wassimmallehwm/node.js_crud_generator/static/css/2.e107cfe9.chunk.css",
+    "static/js/2.2bc736d7.chunk.js": "/wassimmallehwm/node.js_crud_generator/static/js/2.2bc736d7.chunk.js",
+    "static/js/2.2bc736d7.chunk.js.map": "/wassimmallehwm/node.js_crud_generator/static/js/2.2bc736d7.chunk.js.map",
+    "static/js/3.c2087d9c.chunk.js": "/wassimmallehwm/node.js_crud_generator/static/js/3.c2087d9c.chunk.js",
+    "static/js/3.c2087d9c.chunk.js.map": "/wassimmallehwm/node.js_crud_generator/static/js/3.c2087d9c.chunk.js.map",
+    "static/js/4.0b22d038.chunk.js": "/wassimmallehwm/node.js_crud_generator/static/js/4.0b22d038.chunk.js",
+    "static/js/4.0b22d038.chunk.js.map": "/wassimmallehwm/node.js_crud_generator/static/js/4.0b22d038.chunk.js.map",
+    "static/js/5.ac5b47f3.chunk.js": "/wassimmallehwm/node.js_crud_generator/static/js/5.ac5b47f3.chunk.js",
+    "static/js/5.ac5b47f3.chunk.js.map": "/wassimmallehwm/node.js_crud_generator/static/js/5.ac5b47f3.chunk.js.map",
+    "static/js/6.41d3d19c.chunk.js": "/wassimmallehwm/node.js_crud_generator/static/js/6.41d3d19c.chunk.js",
+    "static/js/6.41d3d19c.chunk.js.map": "/wassimmallehwm/node.js_crud_generator/static/js/6.41d3d19c.chunk.js.map",
+    "index.html": "/wassimmallehwm/node.js_crud_generator/index.html",
+    "static/css/2.e107cfe9.chunk.css.map": "/wassimmallehwm/node.js_crud_generator/static/css/2.e107cfe9.chunk.css.map",
+    "static/css/main.0ebd375e.chunk.css.map": "/wassimmallehwm/node.js_crud_generator/static/css/main.0ebd375e.chunk.css.map",
+    "static/js/2.2bc736d7.chunk.js.LICENSE.txt": "/wassimmallehwm/node.js_crud_generator/static/js/2.2bc736d7.chunk.js.LICENSE.txt",
+    "static/media/pencil.372bf1c0.svg": "/wassimmallehwm/node.js_crud_generator/static/media/pencil.372bf1c0.svg",
+    "static/media/plus.5e21677f.svg": "/wassimmallehwm/node.js_crud_generator/static/media/plus.5e21677f.svg",
+    "static/media/x.85f9f2a1.svg": "/wassimmallehwm/node.js_crud_generator/static/media/x.85f9f2a1.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f17bd927.js",
+    "static/css/2.e107cfe9.chunk.css",
+    "static/js/2.2bc736d7.chunk.js",
+    "static/css/main.0ebd375e.chunk.css",
+    "static/js/main.24f800b5.chunk.js"
+  ]
+}
