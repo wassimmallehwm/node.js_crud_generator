@@ -2,10 +2,9 @@ import React, { useRef, useState } from 'react'
 import { Form } from 'react-bootstrap';
 import { APIService } from '../../services/api.service';
 import { ShadowBox, Select, MultipleSelect } from '../shared';
-import { Settings } from '../../types/Settings';
+import { Dependency, Settings } from '../../types';
 import initSettings from '../../initial_settings.json';
 import { useEffect } from 'react';
-import { Dependency } from '../../types/Dependency';
 
 interface AppSettingsProps {
     settings: Settings;

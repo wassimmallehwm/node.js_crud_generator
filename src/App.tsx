@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import { Button, Row } from 'react-bootstrap';
 import initSettings from './initial_settings.json';
-import { Settings } from './types/Settings';
+import { Entity, Settings } from './types';
 import AppSettings from './Components/app-settings/AppSettings';
 import Entities from './Components/entities/Entities';
-import { Entity } from './types/Entity';
-import { useEffect } from 'react';
-import JSZip from "jszip";
 import { AppGenerator } from './Components/app-generator/AppGenerator';
-const { saveAs } = require('save-as');
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure()
 
 function App() {
   const [settings, setSettings] = useState<Settings>(new Settings(initSettings.init_settings));
@@ -25,12 +25,30 @@ function App() {
   }
 
   useEffect(() => {
+    const savedEntities = localStorage.getItem('entities');
+    const savedSettings = localStorage.getItem('settings');
+    if(savedEntities && savedEntities != ''){
+      setEntities(JSON.parse(savedEntities))
+    }
+    if(savedSettings && savedSettings != ''){
+      setSettings(JSON.parse(savedSettings))
+    }
+  }, [])
+
+  useEffect(() => {
     let res: string[] = [];
     for (let entity of entities) {
-      res.push(entity.entity_name)
+      if(entity && entity.entity_name){
+        res.push(entity.entity_name)
+      }
     }
     setEntitiesLabels(res);
   }, [entities])
+
+  useEffect(() => {
+    localStorage.setItem('entities', JSON.stringify(entities))
+    localStorage.setItem('settings', JSON.stringify(settings))
+  }, [entities, settings])
 
   const invalidAction = () => {
     return settings.project_name.trim() == "";
@@ -62,7 +80,8 @@ function App() {
           Generate
         </Button>
       </div>
-
+      
+      <ToastContainer />
     </div>
 
   );

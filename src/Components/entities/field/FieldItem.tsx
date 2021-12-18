@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Form } from 'react-bootstrap'
-import { Field } from '../../../types/Field'
+import { Field } from '../../../types'
 import { EntityButton } from '../EntityButton'
 import xIcon from '../../../assets/x.svg';
 import initSettings from '../../../initial_settings.json';

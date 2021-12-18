@@ -1,5 +1,5 @@
 import JSZip from "jszip";
-import { Entity } from "../../../../../../types/Entity";
+import { Entity } from "../../../../../../types";
 import routeTemplate from "./template";
 
 class RoutesGenerator {

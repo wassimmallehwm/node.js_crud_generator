@@ -1,6 +1,5 @@
 import JSZip from "jszip";
-import { Entity } from "../../../types/Entity";
-import { Settings } from "../../../types/Settings";
+import { Entity, Settings } from "../../../types";
 
 
 class EntitiesGenerator {

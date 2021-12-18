@@ -1,11 +1,10 @@
 import React from 'react'
 import { Button, Form, Modal, Row } from 'react-bootstrap'
-import { Entity } from '../../../types/Entity'
+import { Entity, Field } from '../../../types'
 import plusIcon from '../../../assets/plus.svg';
 import { EntityButton } from '../EntityButton';
 import FieldItem from '../field/FieldItem';
 import initSettings from '../../../initial_settings.json'
-import { Field } from '../../../types/Field';
 import { Switch } from '../../shared';
 
 interface EntityModalProps {
@@ -75,7 +74,6 @@ const EntityModal = ({
     }
 
     const newField = () => {
-        console.log("NEW FIELD")
         setEntity((prev: Entity) => ({
             ...prev,
             entity_fields: [...prev.entity_fields, new Field(initSettings.init_field)]

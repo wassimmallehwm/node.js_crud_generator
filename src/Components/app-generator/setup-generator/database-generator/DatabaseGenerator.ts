@@ -1,5 +1,5 @@
 import JSZip from "jszip";
-import { Settings } from "../../../../types/Settings";
+import { Settings } from "../../../../types";
 import dbTemplate from "./template";
 
 class DatabaseGenerator {

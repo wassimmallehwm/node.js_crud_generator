@@ -1,0 +1,6 @@
+.edit-btn:hover{
+    filter: invert(35%) sepia(62%) saturate(5026%) hue-rotate(200deg) brightness(103%) contrast(106%);
+}
+.delete-btn:hover{
+    filter: invert(14%) sepia(47%) saturate(7481%) hue-rotate(355deg) brightness(115%) contrast(125%);
+}

@@ -1,4 +1,4 @@
-import { Settings } from "../../../../types/Settings";
+import { Settings } from "../../../../types";
 import envTemplate from "./template";
 
 class EnvGenerator {

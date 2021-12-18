@@ -1,5 +1,4 @@
-import { Entity } from "../../types/Entity";
-import { Settings } from "../../types/Settings";
+import { Entity, Settings } from "../../types";
 import { EntitiesGenerator } from "./entities-generator";
 import { SetupGenerator } from "./setup-generator";
 import JSZip from "jszip";

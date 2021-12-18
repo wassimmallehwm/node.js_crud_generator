@@ -1,4 +1,4 @@
-import { Settings } from "../../../../types/Settings";
+import { Settings } from "../../../../types";
 import packTemplate from "./template";
 
 class PackageGenerator {

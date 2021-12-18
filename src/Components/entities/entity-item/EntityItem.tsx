@@ -1,21 +1,29 @@
 import React from 'react'
-import { Button } from 'react-bootstrap'
-import { EditBtn } from './EditBtn'
 import { Item } from './Item'
 import pencilIcon from '../../../assets/pencil.svg';
+import xIcon from '../../../assets/x.svg';
+import './dropdown.css';
+
 
 interface EntityItemProps {
     name: string;
-    index: number;
+    id: number;
     editEntity: any;
+    deleteEntity: any;
 }
 
-const EntityItem = ({name, index, editEntity} : EntityItemProps) => {
+const EntityItem = ({ name, id, editEntity, deleteEntity }: EntityItemProps) => {
+
     return (
         <Item>
             <span> {name} </span>
-            <div onClick={() => editEntity(index)}>
-            <img style={{filter: 'invert(35%) sepia(62%) saturate(5026%) hue-rotate(200deg) brightness(103%) contrast(106%)'}} src={pencilIcon}/>
+            <div style={{display: 'flex'}} >
+                <div style={{ display: 'flex', margin: '0 3px', padding: '4px' }} onClick={() => editEntity(id)}>
+                    <img className="edit-btn" src={pencilIcon} />
+                </div>
+                <div style={{ display: 'flex', margin: '0 3px' }} onClick={() => deleteEntity(id)}>
+                    <img className="delete-btn" src={xIcon} />
+                </div>
             </div>
         </Item>
     )
