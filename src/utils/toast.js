@@ -26,6 +26,5 @@ export const Toast = (type, message) => {
             break;
         default:
             console.log("TOAST undefined !");
-            toast.configure
     }
 }
