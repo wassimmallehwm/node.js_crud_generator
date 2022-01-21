@@ -1,6 +1,5 @@
 {
   "name": "crud-generator",
-  "homepage": "https://github.com/wassimmallehwm/node.js_crud_generator",
   "version": "0.1.0",
   "private": false,
   "dependencies": {

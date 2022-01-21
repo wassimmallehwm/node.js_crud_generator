@@ -55,6 +55,11 @@
             "complex": false
         },
         {
+            "type": "Date",
+            "label": "Date",
+            "complex": false
+        },
+        {
             "type": "String[]",
             "label": "String[]",
             "complex": false

@@ -1,7 +1,7 @@
 import initSettings from '../../../../initial_settings.json'
 const packTemplate = (settings) => {
     let dependencies = '';
-    let depArray = settings.dependencies;
+    let depArray = [...settings.dependencies];
 
     initSettings.init_dependencies.forEach(element => {
       if(!depArray.find(elem => elem.name === element.name)){

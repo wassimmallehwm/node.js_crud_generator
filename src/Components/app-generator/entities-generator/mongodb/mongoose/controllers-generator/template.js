@@ -9,9 +9,8 @@ module.exports.create = async(req, res) => {
     return res.status(200).json(result);
   } catch (err) {
     console.log("${entity.entity_name} creation failed: " + err);
-    return res.status(500).json({
-      message: "Error while trying to create ${entity.entity_name}",
-    });
+    const { status, message } = errorHandler(err)
+    res.status(status).json({message, entity: '${entity.entity_name}'})
   }
 };
     `;
@@ -24,9 +23,8 @@ module.exports.getAll = async(req, res) => {
     return res.status(200).json(result);
   } catch (err) {
     console.log("${entity.entity_name} getAll failed: " + err);
-    return res.status(500).json({
-      message: "Error while trying to get ${entity.entity_name}",
-    });
+    const { status, message } = errorHandler(err)
+    res.status(status).json({message, entity: '${entity.entity_name}'})
   }
 };
 
@@ -38,9 +36,8 @@ module.exports.getById = async(req, res) => {
     return res.status(200).json(result);
   } catch (err) {
     console.log("${entity.entity_name} getById failed: " + err);
-    return res.status(500).json({
-      message: "Error while trying to get ${entity.entity_name}",
-    });
+    const { status, message } = errorHandler(err)
+    res.status(status).json({message, entity: '${entity.entity_name}'})
   }
 };
     `;
@@ -54,9 +51,8 @@ module.exports.update = async(req, res) => {
     return res.status(200).json(result);
   } catch (err) {
     console.log("${entity.entity_name} update failed: " + err);
-    return res.status(500).json({
-      message: "Error while trying to update ${entity.entity_name}",
-    });
+    const { status, message } = errorHandler(err)
+    res.status(status).json({message, entity: '${entity.entity_name}'})
   }
 };
     `;
@@ -70,47 +66,41 @@ module.exports.remove = async(req, res) => {
     return res.status(200).json(result);
   } catch (err) {
     console.log("${entity.entity_name} delete failed: " + err);
-    return res.status(500).json({
-      message: "Error while trying to delete ${entity.entity_name}",
-    });
+    const { status, message } = errorHandler(err)
+    res.status(status).json({message, entity: '${entity.entity_name}'})
   }
 };
     `;
 
     const paginate = entity.entity_paginated ? `
 module.exports.getList = async(req, res) => {
-    const { page = 1, limit = 20, sortField, sortDir } = req.query;
-    const options = {
+    try {
+      const { page = 1, limit = 20, sortField, sortOrder } = req.query;
+      const options = {
         page: parseInt(page, 10),
         limit: parseInt(limit, 10),
         sort: {}
 
-    };
+      };
 
-    if (sortField && sortDir) {
+      if (sortField && sortOrder) {
         options.sort = {
-            [sortField]: sortDir
+            [sortField]: sortOrder
         }
-    }
+      }
 
-    return res.status(200).json(result);
-    ${entity.entity_name}.paginate({}, options)
-    .then(
-        result => {
-            res.status(200).json(result);
-        }
-    )
-    .catch(
-        error => {
-            return res.status(500).json({
-                message: "Error while trying to get ${entity.entity_name}",
-            });
-        }
-    );
+      const result = await ${entity.entity_name}.paginate({}, options);
+      return res.status(200).json(result);
+    } catch (err) {
+      console.log("${entity.entity_name} list failed: " + err);
+      const { status, message } = errorHandler(err)
+      res.status(status).json({message, entity: '${entity.entity_name}'})
+    }
 };
     ` : '';
 
-    return `const ${entity.entity_name} = require("../models/${entity.entity_name.toLocaleLowerCase()}");
+    return `const ${entity.entity_name} = require("../models/${entity.entity_name.toLocaleLowerCase()}.model");
+    const errorHandler = require("../utils/errorHandler");
       ${create}
       ${read}
       ${paginate}

@@ -5,6 +5,7 @@ import { EnvGenerator } from "./env-generator";
 import { IndexGenerator } from "./index-generator";
 import { MiddlewareGenerator } from "./middleware-generator";
 import { PackageGenerator } from "./package-generator";
+import { UtilsGenerator } from "./utils-generator";
 
 class SetupGenerator {
 
@@ -16,6 +17,7 @@ class SetupGenerator {
         
         DatabaseGenerator.generateDatabase(settings, directory);
         MiddlewareGenerator.generateMiddleware(settings, entities, directory);
+        UtilsGenerator.generateUtils(settings, entities, directory)
         
         directory.file(".gitignore", `/node_modules
         .env`);
