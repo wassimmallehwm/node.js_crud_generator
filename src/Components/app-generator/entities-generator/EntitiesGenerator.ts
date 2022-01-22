@@ -4,10 +4,12 @@ import { Entity, Settings } from "../../../types";
 class EntitiesGenerator {
 
     static async generateEntities(entities: Entity[], settings: Settings, directory: JSZip){
-        const { ControllersGenerator } = await import(`./${settings.database}/${settings.database_orm}/controllers-generator`);
-        const { ModelsGenerator } = await import(`./${settings.database}/${settings.database_orm}/models-generator`);
-        const { RoutesGenerator } = await import(`./${settings.database}/${settings.database_orm}/routes-generator`);
-        const { EntityGenerator } = await import(`./${settings.database}/${settings.database_orm}`);
+        const db = settings.database.toLocaleLowerCase();
+        const orm = settings.database_orm.toLocaleLowerCase();
+        const { ControllersGenerator } = await import(`./${db}/${orm}/controllers-generator`);
+        const { ModelsGenerator } = await import(`./${db}/${orm}/models-generator`);
+        const { RoutesGenerator } = await import(`./${db}/${orm}/routes-generator`);
+        const { EntityGenerator } = await import(`./${db}/${orm}`);
 
         const modules = directory?.folder("modules");
         entities.forEach(entity => {

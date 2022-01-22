@@ -14,7 +14,7 @@ const StyledShadowBox = styled.div`
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
   flex-grow: 1;
   flex-basis: 200px;
-  overflow: auto;
+  overflow: ${props => props.autoFlow ? 'auto' : 'inherit'};
 `;
 
 export { StyledShadowBox };

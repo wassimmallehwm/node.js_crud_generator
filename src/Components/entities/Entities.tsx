@@ -79,7 +79,7 @@ const Entities = ({
     }
 
     return (
-        <ShadowBox>
+        <ShadowBox autoFlow>
             <h5 style={{ borderBottom: '1px solid #5c5c5c', padding: '.5rem', color: '#5c5c5c' }} >Entities</h5>
             <EntityButton aria-label="add entity" absolute onClick={newEntity}>
                 <img alt='add entity' src={plusIcon} />
