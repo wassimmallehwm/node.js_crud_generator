@@ -7,20 +7,20 @@ const { saveAs } = require('save-as');
 
 export class AppGenerator {
 
-  static generateApp(entities: Entity[], settings: Settings, callback: any) {
+  static async generateApp(entities: Entity[], settings: Settings, callback: any) {
     var zip = new JSZip();
     SetupGenerator.generateSetup(settings, entities, zip);
-    EntitiesGenerator.generateEntities(entities, settings, zip)
-      .then(() => {
-        zip.generateAsync({ type: "blob" })
-          .then(function (content: any) {
-            saveAs(content, settings.project_name.replace(' ', '-') + ".zip");
-            Toast('SUCCESS', 'Project generated successfully')
-            callback();
-          }).catch((error: any) => {
-            callback()
-            Toast('ERROR', 'Project generation failed')
-          });
-      })
+    if (entities.length > 0) {
+      await EntitiesGenerator.generateEntities(entities, settings, zip)
+    }
+    zip.generateAsync({ type: "blob" })
+      .then(function (content: any) {
+        saveAs(content, settings.project_name.replace(' ', '-') + ".zip");
+        Toast('SUCCESS', 'Project generated successfully')
+        callback();
+      }).catch((error: any) => {
+        callback()
+        Toast('ERROR', 'Project generation failed')
+      });
   }
 }

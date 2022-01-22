@@ -52,7 +52,7 @@ function App() {
   }, [entities, settings])
 
   const validAction = (doToast?: boolean) => {
-    if(settings.project_name.trim() == ""){
+    if(settings.project_name.trim() === ""){
       if(doToast){
         Toast('ERROR', 'Project name is required')
       }
