@@ -2,8 +2,8 @@
 const routeTemplate = (entity) => {
 
     const importCrud = entity.entity_paginated ? 
-    `const { create, getAll, getById, getList, update, remove} = require('../controllers/${entity.entity_name.toLocaleLowerCase()}.controller');`
-    : `const { create, getAll, getById, update, remove} = require('../controllers/${entity.entity_name.toLocaleLowerCase()}.controller');`
+    `const { create, getAll, getById, getList, update, remove} = require('./${entity.entity_name.toLocaleLowerCase()}.controller');`
+    : `const { create, getAll, getById, update, remove} = require('./${entity.entity_name.toLocaleLowerCase()}.controller');`
 
     const paginateRoute = entity.entity_paginated ? `router.get('/list', getList);` : '';
     return `const express = require('express');

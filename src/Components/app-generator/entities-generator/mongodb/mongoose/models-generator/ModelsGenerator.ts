@@ -4,11 +4,8 @@ import modelTemplate from "./template";
 
 class ModelsGenerator {
 
-    static generateModel(entities: Entity[], directory: JSZip){
-        var models = directory?.folder("models");
-        entities.forEach(entity => {
-            models?.file(`${entity.entity_name.toLocaleLowerCase()}.model.js`, modelTemplate(entity));
-        })
+    static generateModel(entity: Entity, directory: JSZip){
+        directory?.file(`${entity.entity_name.toLocaleLowerCase()}.model.js`, modelTemplate(entity));
     }
 }
 

@@ -21,7 +21,6 @@ class SetupGenerator {
         
         directory.file(".gitignore", `/node_modules
         .env`);
-        console.log("Setup generator : ", settings);
     }
 }
 

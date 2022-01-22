@@ -19,10 +19,10 @@ const EntityItem = ({ name, id, editEntity, deleteEntity }: EntityItemProps) => 
             <span> {name} </span>
             <div style={{display: 'flex'}} >
                 <div style={{ display: 'flex', margin: '0 3px', padding: '4px' }} onClick={() => editEntity(id)}>
-                    <img className="edit-btn" src={pencilIcon} />
+                    <img alt='edit entity' className="edit-btn" src={pencilIcon} />
                 </div>
                 <div style={{ display: 'flex', margin: '0 3px' }} onClick={() => deleteEntity(id)}>
-                    <img className="delete-btn" src={xIcon} />
+                    <img alt='delete entity' className="delete-btn" src={xIcon} />
                 </div>
             </div>
         </Item>

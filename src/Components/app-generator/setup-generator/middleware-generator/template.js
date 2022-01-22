@@ -2,7 +2,7 @@ const middlewareTemplate = (entities) => {
 
   let entitiesRoutes = '';
   entities.forEach(elem => {
-    entitiesRoutes += `app.use('/api/${elem.entity_name.toLowerCase()}', require('../routes/${elem.entity_name.toLowerCase()}.routes'))
+    entitiesRoutes += `app.use('/api/${elem.entity_name.toLowerCase()}', require('../modules/${elem.entity_name.toLowerCase()}'))
   `;
   });
 

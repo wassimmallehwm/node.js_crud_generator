@@ -9,7 +9,7 @@ const dbConnect = () => {
   });
   const connection = mongoose.connection;
   connection.once('open', async () => {
-      console.log('Connected to DataBase');
+      console.info('Connected to DataBase');
   })
 }
 

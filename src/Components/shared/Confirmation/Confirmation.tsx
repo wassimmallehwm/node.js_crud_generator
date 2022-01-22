@@ -1,4 +1,3 @@
-import React from 'react'
 import { Modal, Row, Button } from 'react-bootstrap'
 
 interface ConfirmationProps {

@@ -4,11 +4,8 @@ import controllerTemplate from "./template";
 
 class ControllersGenerator {
 
-    static generateControllers(entities: Entity[], directory: JSZip){
-        var controllers = directory?.folder("controllers");
-        entities.forEach(entity => {
-            controllers?.file(`${entity.entity_name.toLocaleLowerCase()}.controller.js`, controllerTemplate(entity));
-        })
+    static generateControllers(entity: Entity, directory: JSZip){
+        directory?.file(`${entity.entity_name.toLocaleLowerCase()}.controller.js`, controllerTemplate(entity));
     }
 }
 

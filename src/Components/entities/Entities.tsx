@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { ShadowBox } from '../shared'
 import plusIcon from '../../assets/plus.svg';
 import { EntityButton } from './EntityButton';
@@ -81,8 +81,8 @@ const Entities = ({
     return (
         <ShadowBox>
             <h5 style={{ borderBottom: '1px solid #5c5c5c', padding: '.5rem', color: '#5c5c5c' }} >Entities</h5>
-            <EntityButton absolute onClick={newEntity}>
-                <img src={plusIcon} />
+            <EntityButton aria-label="add entity" absolute onClick={newEntity}>
+                <img alt='add entity' src={plusIcon} />
             </EntityButton>
             <div style={{overflowY: 'auto'}} >
             {entities && entities.map(

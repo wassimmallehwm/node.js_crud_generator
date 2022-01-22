@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Form } from 'react-bootstrap';
 import { APIService } from '../../services/api.service';
 import { ShadowBox, Select, MultipleSelect } from '../shared';
@@ -41,7 +41,6 @@ const AppSettings = ({
             ...prev,
             dependencies: tab
         }))
-        console.log(selected)
     }
     const handlePackInputChange = (text: string, event: any) => {
         findPacks(text)
@@ -67,7 +66,6 @@ const AppSettings = ({
     }
 
     const findPacks = (search: string) => {
-        console.log(search)
         setOptionsLoading(true);
         apiService.current.findNpmPacks(search).then(
             result => {
@@ -89,7 +87,7 @@ const AppSettings = ({
         <ShadowBox>
             <h5 style={{borderBottom: '1px solid #5c5c5c', padding: '.5rem' ,color: '#5c5c5c'}} >App settings</h5>
             <div className="d-flex flex-row flex-wrap">
-                <div className="p-2 col-6">
+                <div className="p-2 col-sm-6 col-xs-12">
                     <Form.Label>Project Name:</Form.Label>
                     <Form.Control
                         type="text"
@@ -100,7 +98,7 @@ const AppSettings = ({
                         onChange={onChangeSettings}
                     />
                 </div>
-                <div className="p-2 col-6">
+                <div className="p-2 col-sm-6 col-xs-12">
                     <Form.Group style={{ minWidth: "150px" }}>
                         <Form.Label>Database</Form.Label>
                         <Select
@@ -112,7 +110,7 @@ const AppSettings = ({
                         />
                     </Form.Group>
                 </div>
-                <div className="p-2 col-6">
+                <div className="p-2 col-sm-6 col-xs-12">
                     <Form.Group style={{ minWidth: "150px" }}>
                         <Form.Label>Database ORM/ODM</Form.Label>
                         <Select
@@ -123,7 +121,7 @@ const AppSettings = ({
                         />
                     </Form.Group>
                 </div>
-                <div className="p-2 col-6">
+                <div className="p-2 col-sm-6 col-xs-12">
                     <Form.Group style={{ width: "100%" }}>
                         <Form.Label>Npm packages</Form.Label>
                         <MultipleSelect

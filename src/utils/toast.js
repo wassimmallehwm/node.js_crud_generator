@@ -25,6 +25,6 @@ export const Toast = (type, message) => {
             toast.warning(message, toastConfig)
             break;
         default:
-            console.log("TOAST undefined !");
+            console.warn("TOAST undefined !");
     }
 }

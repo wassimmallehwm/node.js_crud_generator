@@ -5,7 +5,7 @@ import middlewareTemplate from "./template";
 class MiddlewareGenerator {
 
     static generateMiddleware(settings: Settings, entities: Entity[], directory: JSZip){
-        var middleware = directory?.folder("middleware");
+        const middleware = directory?.folder("middleware");
         middleware?.file("index.js", middlewareTemplate(entities));
     }
 }

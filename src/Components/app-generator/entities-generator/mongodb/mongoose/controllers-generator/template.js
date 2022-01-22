@@ -8,7 +8,7 @@ module.exports.create = async(req, res) => {
     const result = await item.save();
     return res.status(200).json(result);
   } catch (err) {
-    console.log("${entity.entity_name} creation failed: " + err);
+    console.error("${entity.entity_name} creation failed: " + err);
     const { status, message } = errorHandler(err)
     res.status(status).json({message, entity: '${entity.entity_name}'})
   }
@@ -22,7 +22,7 @@ module.exports.getAll = async(req, res) => {
 
     return res.status(200).json(result);
   } catch (err) {
-    console.log("${entity.entity_name} getAll failed: " + err);
+    console.error("${entity.entity_name} getAll failed: " + err);
     const { status, message } = errorHandler(err)
     res.status(status).json({message, entity: '${entity.entity_name}'})
   }
@@ -35,7 +35,7 @@ module.exports.getById = async(req, res) => {
 
     return res.status(200).json(result);
   } catch (err) {
-    console.log("${entity.entity_name} getById failed: " + err);
+    console.error("${entity.entity_name} getById failed: " + err);
     const { status, message } = errorHandler(err)
     res.status(status).json({message, entity: '${entity.entity_name}'})
   }
@@ -50,7 +50,7 @@ module.exports.update = async(req, res) => {
 
     return res.status(200).json(result);
   } catch (err) {
-    console.log("${entity.entity_name} update failed: " + err);
+    console.error("${entity.entity_name} update failed: " + err);
     const { status, message } = errorHandler(err)
     res.status(status).json({message, entity: '${entity.entity_name}'})
   }
@@ -65,7 +65,7 @@ module.exports.remove = async(req, res) => {
     const result = await ${entity.entity_name}.deleteOne({ _id: id});
     return res.status(200).json(result);
   } catch (err) {
-    console.log("${entity.entity_name} delete failed: " + err);
+    console.error("${entity.entity_name} delete failed: " + err);
     const { status, message } = errorHandler(err)
     res.status(status).json({message, entity: '${entity.entity_name}'})
   }
@@ -92,15 +92,15 @@ module.exports.getList = async(req, res) => {
       const result = await ${entity.entity_name}.paginate({}, options);
       return res.status(200).json(result);
     } catch (err) {
-      console.log("${entity.entity_name} list failed: " + err);
+      console.error("${entity.entity_name} list failed: " + err);
       const { status, message } = errorHandler(err)
       res.status(status).json({message, entity: '${entity.entity_name}'})
     }
 };
     ` : '';
 
-    return `const ${entity.entity_name} = require("../models/${entity.entity_name.toLocaleLowerCase()}.model");
-    const errorHandler = require("../utils/errorHandler");
+    return `const ${entity.entity_name} = require("./${entity.entity_name.toLocaleLowerCase()}.model");
+    const errorHandler = require("../../utils/errorHandler");
       ${create}
       ${read}
       ${paginate}

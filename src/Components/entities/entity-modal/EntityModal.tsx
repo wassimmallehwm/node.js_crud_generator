@@ -1,4 +1,3 @@
-import React from 'react'
 import { Button, Form, Modal, Row } from 'react-bootstrap'
 import { Entity, Field } from '../../../types'
 import plusIcon from '../../../assets/plus.svg';
@@ -145,8 +144,8 @@ const EntityModal = ({
                 </Row>
                 <div style={{ position: 'relative' }} >
                     <h5 style={{ borderBottom: '1px solid #5c5c5c', padding: '.5rem', color: '#5c5c5c' }}>Fields</h5>
-                    <EntityButton absolute top="5" right="20" onClick={newField}>
-                        <img src={plusIcon} />
+                    <EntityButton aria-label="add field" absolute top="5" right="20" onClick={newField}>
+                        <img alt='add field' src={plusIcon} />
                     </EntityButton>
                 </div>
                 <div style={{ maxHeight: '30vh', overflowY: 'auto' }}>

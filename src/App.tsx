@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -10,6 +10,7 @@ import Entities from './Components/entities/Entities';
 import { AppGenerator } from './Components/app-generator/AppGenerator';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Toast } from './utils/toast';
 
 toast.configure()
 
@@ -17,10 +18,10 @@ function App() {
   const [settings, setSettings] = useState<Settings>(new Settings(initSettings.init_settings));
   const [entities, setEntities] = useState<Entity[]>([]);
   const [entitiesLabels, setEntitiesLabels] = useState<string[]>([]);
+  const [btnLoading, setBtnLoading] = useState<boolean>(false);
 
 
   const onChangeSettings = (e: any) => {
-    console.log(e.target.value)
     setSettings({ ...settings, [e.target.name]: e.target.value });
   }
 
@@ -50,22 +51,30 @@ function App() {
     localStorage.setItem('settings', JSON.stringify(settings))
   }, [entities, settings])
 
-  const invalidAction = () => {
-    return settings.project_name.trim() == "";
+  const validAction = (doToast?: boolean) => {
+    if(settings.project_name.trim() == ""){
+      if(doToast){
+        Toast('ERROR', 'Project name is required')
+      }
+      return false;
+    }
+    return true;
   }
 
+  const stopLoading = () => setBtnLoading(false);
+
   const generateApp = () => {
-    if(!invalidAction()){
-      AppGenerator.generateApp(entities, settings);
+    setBtnLoading(true)
+    if(validAction(true)){
+      AppGenerator.generateApp(entities, settings, stopLoading);
     }
-    console.log(settings, entities)
   }
 
 
   return (
     <div className="p-3 m-auto" style={{ minHeight: "100vh", background: '#f0f0f0b8' }}>
       <Row className="d-flex justify-content-center mt-4">
-        <h1>Node.js/Express CRUD generator</h1>
+        <h1 style={{textAlign: 'center'}}>Node.js/Express CRUD generator</h1>
       </Row>
       <div className="d-flex flex-row flex-wrap">
         <div className="p-1 col-md-8" style={{ maxHeight: '400px' }}>
@@ -76,8 +85,8 @@ function App() {
         </div>
       </div>
       <div className="d-flex flex-row flex-wrap mt-4 px-3">
-        <Button disabled={invalidAction()} onClick={generateApp} variant="success" style={{ boxShadow: '1px 1px 4px 1px rgb(0 0 0 / 20%)' }} >
-          Generate
+        <Button disabled={!validAction() || btnLoading} onClick={generateApp} variant="success" style={{ boxShadow: '1px 1px 4px 1px rgb(0 0 0 / 20%)' }} >
+          {btnLoading ? 'Generating...' : 'Generate'}
         </Button>
       </div>
       

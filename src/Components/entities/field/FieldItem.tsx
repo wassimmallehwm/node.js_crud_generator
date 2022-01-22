@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { Field } from '../../../types'
 import { EntityButton } from '../EntityButton'
@@ -125,8 +125,8 @@ const FieldItem = ({
                     <p className="ml-1 mb-2">Unique</p>
                 </div>
             </Form.Group>
-            <EntityButton className="mx-1" onClick={() => onFieldRemove(index)} color="#dc3545" hover="#d50014">
-                <img src={xIcon}
+            <EntityButton aria-label="remove field" className="mx-1" onClick={() => onFieldRemove(index)} color="#dc3545" hover="#d50014">
+                <img alt='remove field' src={xIcon}
                     style={{ filter: 'invert(100%) sepia(0%) saturate(7500%) hue-rotate(72deg) brightness(99%) contrast(99%)' }}
                 />
             </EntityButton>
