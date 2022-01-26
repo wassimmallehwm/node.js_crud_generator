@@ -79,6 +79,23 @@ const EntityModal = ({
         }))
     }
 
+    const toggleCollapse = (index: number) => {
+        setEntity((prev: Entity) => {
+            return {
+                ...prev,
+                entity_fields: prev.entity_fields.map((field: Field, i) => {
+                    if (index == i) {
+                        return {
+                            ...field,
+                            collapsed: !field.collapsed
+                        }
+                    }
+                    return field
+                })
+            }
+        })
+    }
+
     return entity ? (
         <Modal
             show={show}
@@ -94,7 +111,7 @@ const EntityModal = ({
             </Modal.Header>
             <Modal.Body>
                 <Row style={{ alignItems: 'center' }} >
-                    <div className="px-4 py-2 col-6">
+                    <div className="px-4 py-2 col-sm-4 col-xs-12">
                         {/* <Form.Label>Entity name:</Form.Label> */}
                         <Form.Control
                             type="text"
@@ -106,40 +123,44 @@ const EntityModal = ({
                         />
                         {/* <Form.Text className="text-muted">Ex: product</Form.Text> */}
                     </div>
-                    <div className="p-2 col-3">
-                        <Form.Group id="formGridCheckbox">
-                            {/* <Form.Check name="entity_timestamp" checked={entity.entity_timestamp}
+                    <div className='px-4 py-2 col-sm-8 col-xs-12'>
+                        <div className='row'>
+                            <div className="col-6">
+                                <Form.Group id="formGridCheckbox">
+                                    {/* <Form.Check name="entity_timestamp" checked={entity.entity_timestamp}
                                 onChange={handleCheckBoxChange} type="checkbox" label="Timestamp" /> */}
-                            <div className="d-flex mt-2 flex-row align-items-center">
-                                <div>
-                                    <Switch
-                                        name="entity_timestamp"
-                                        onChange={handleCheckBoxChange}
-                                        checked={entity.entity_timestamp}
-                                        label="Timestamp"
-                                    />
-                                </div>
-                                <p className="ml-1 mb-2">Timestamp</p>
+                                    <div className="d-flex mt-2 flex-row align-items-center">
+                                        <div>
+                                            <Switch
+                                                name="entity_timestamp"
+                                                onChange={handleCheckBoxChange}
+                                                checked={entity.entity_timestamp}
+                                                label="Timestamp"
+                                            />
+                                        </div>
+                                        <p className="ml-1 mb-2">Timestamp</p>
+                                    </div>
+                                </Form.Group>
                             </div>
-                        </Form.Group>
-                    </div>
-                    <div className="p-2 col-3">
-                        <Form.Group id="formGridCheckbox">
-                            <div className="d-flex mt-2 flex-row align-items-center">
-                                <div>
-                                    <Switch
-                                        name="entity_paginated"
-                                        onChange={handleCheckBoxChange}
-                                        checked={entity.entity_paginated}
-                                        label="Paginated"
-                                    />
-                                </div>
-                                <p className="ml-1 mb-2">Paginated</p>
-                            </div>
+                            <div className="col-6">
+                                <Form.Group id="formGridCheckbox">
+                                    <div className="d-flex mt-2 flex-row align-items-center">
+                                        <div>
+                                            <Switch
+                                                name="entity_paginated"
+                                                onChange={handleCheckBoxChange}
+                                                checked={entity.entity_paginated}
+                                                label="Paginated"
+                                            />
+                                        </div>
+                                        <p className="ml-1 mb-2">Paginated</p>
+                                    </div>
 
-                            {/* <Form.Check name="entity_paginated" checked={entity.entity_paginated}
+                                    {/* <Form.Check name="entity_paginated" checked={entity.entity_paginated}
                                 onChange={handleCheckBoxChange} type="checkbox" label="Paginated" /> */}
-                        </Form.Group>
+                                </Form.Group>
+                            </div>
+                        </div>
                     </div>
                 </Row>
                 <div style={{ position: 'relative' }} >
@@ -152,7 +173,7 @@ const EntityModal = ({
                     {entity.entity_fields && entity.entity_fields.map(
                         (field, i) => (
                             <FieldItem key={i} index={i} field={field} onFieldTypeChange={onFieldTypeChange}
-                                onFieldChange={onFieldChange} onFieldRemove={onFieldRemove}
+                                onFieldChange={onFieldChange} onFieldRemove={onFieldRemove} toggleCollapse={toggleCollapse}
                                 entitiesLabels={entitiesLabels} entityName={entity.entity_name}
                             />
                         )

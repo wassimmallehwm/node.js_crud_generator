@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ShadowBox } from '../shared'
 import plusIcon from '../../assets/plus.svg';
 import { EntityButton } from './EntityButton';
-import { Entity } from '../../types';
+import { Entity, Field } from '../../types';
 import initSettings from '../../initial_settings.json';
 import EntityModal from './entity-modal/EntityModal';
 import EntityItem from './entity-item/EntityItem';
@@ -39,20 +39,44 @@ const Entities = ({
         openModal()
     }
 
+    const checkIfDuplicateExists = (arr: any[] | undefined) => {
+        let error = false;
+        let alreadySeen: any[] = [];
+        arr?.forEach((str: any) => alreadySeen[str.field_name] ? error = true : alreadySeen[str.field_name] = true);
+        return error;
+    }
+
     const onEntitySave = () => {
-        if(editMode){
-            setEntities((prev: Entity[]) => (prev.map((elem, i) => {
-                if(elem.entity_id === currentEntity?.entity_id){
-                    return currentEntity;
-                } else {
-                    return elem
-                }
-            })))
-        } else {
-            setEntities([...entities, currentEntity])
+        let error = false;
+        let i = 0;
+        while (!error && 
+            currentEntity?.entity_fields.length && 
+            currentEntity?.entity_fields.length > 0 &&
+            i < currentEntity?.entity_fields.length) {
+            if(currentEntity.entity_fields[i].field_name.trim() === "")
+                error = true
+            else i++;
         }
-        setCurrentEntity(new Entity(initSettings.init_entity));
-        closeModal()
+        if(error){
+            Toast("WARNING", "Field name is required !")
+        } else if(checkIfDuplicateExists(currentEntity?.entity_fields)) {
+            Toast("WARNING", "Field name is duplicated !")
+        }
+        else {
+            if(editMode){
+                setEntities((prev: Entity[]) => (prev.map((elem, i) => {
+                    if(elem.entity_id === currentEntity?.entity_id){
+                        return currentEntity;
+                    } else {
+                        return elem
+                    }
+                })))
+            } else {
+                setEntities([...entities, currentEntity])
+            }
+            setCurrentEntity(new Entity(initSettings.init_entity));
+            closeModal()
+        }
     }
 
     const editEntity = (id: number) => {

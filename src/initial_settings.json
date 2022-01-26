@@ -19,7 +19,8 @@
         "field_ref": "",
         "field_required": false,
         "field_default": "",
-        "field_unique": false
+        "field_unique": false,
+        "collapsed": true
     },
     "init_options": {
         "database_options": [

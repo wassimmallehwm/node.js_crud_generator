@@ -51,6 +51,11 @@ function App() {
     localStorage.setItem('settings', JSON.stringify(settings))
   }, [entities, settings])
 
+  const resetSettings = () => {
+    setSettings(new Settings(initSettings.init_settings))
+    setEntities([])
+  }
+
   const validAction = (doToast?: boolean) => {
     if(settings.project_name.trim() === ""){
       if(doToast){
@@ -77,16 +82,19 @@ function App() {
         <h1 style={{textAlign: 'center'}}>Node.js/Express CRUD generator</h1>
       </Row>
       <div className="d-flex flex-row flex-wrap">
-        <div className="p-1 col-md-8" style={{ maxHeight: '400px' }}>
+        <div className="p-1 col-md-8" style={{ maxHeight: '430px' }}>
           <AppSettings settings={settings} setSettings={setSettings} onChangeSettings={onChangeSettings} />
         </div>
-        <div className="p-1 col-md-4" style={{ maxHeight: '400px' }}>
+        <div className="p-1 col-md-4" style={{ maxHeight: '430px' }}>
           <Entities entitiesLabels={entitiesLabels} entities={entities} setEntities={setEntities} />
         </div>
       </div>
       <div className="d-flex flex-row flex-wrap mt-4 px-3">
-        <Button disabled={!validAction() || btnLoading} onClick={generateApp} variant="success" style={{ boxShadow: '1px 1px 4px 1px rgb(0 0 0 / 20%)' }} >
+        <Button className="mr-2" disabled={!validAction() || btnLoading} onClick={generateApp} variant="success" style={{ boxShadow: '1px 1px 4px 1px rgb(0 0 0 / 20%)' }} >
           {btnLoading ? 'Generating...' : 'Generate'}
+        </Button>
+        <Button className="mr-2" onClick={resetSettings} variant="secondary" style={{ boxShadow: '1px 1px 4px 1px rgb(0 0 0 / 20%)' }} >
+          Reset
         </Button>
       </div>
       
