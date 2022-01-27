@@ -62,6 +62,18 @@ function App() {
         Toast('ERROR', 'Project name is required')
       }
       return false;
+    } else 
+    if(!settings.database || settings.database.trim() === ""){
+      if(doToast){
+        Toast('ERROR', 'Database is required')
+      }
+      return false;
+    } else 
+    if(!settings.database_orm || settings.database_orm.trim() === ""){
+      if(doToast){
+        Toast('ERROR', 'Database ORM/ODM is required')
+      }
+      return false;
     }
     return true;
   }
