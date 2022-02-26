@@ -1,10 +1,12 @@
-import { useRef, useState } from 'react'
-import { Form } from 'react-bootstrap';
+import { useRef, useEffect, useState } from 'react'
+import { Button, Form } from 'react-bootstrap';
 import { APIService } from '../../services/api.service';
 import { ShadowBox, Select, MultipleSelect } from '../shared';
 import { Dependency, Settings } from '../../types';
 import initSettings from '../../initial_settings.json';
-import { useEffect } from 'react';
+import dbIcon from '../../assets/db.svg';
+import './app-settings.css';
+import DatabaseSettings from './database-settings/DatabaseSettings';
 
 interface AppSettingsProps {
     settings: Settings;
@@ -20,17 +22,15 @@ const AppSettings = ({
     const apiService = useRef(new APIService());
     const [options, setOptions] = useState<any>([]);
     const [optionsLoading, setOptionsLoading] = useState<boolean>(false);
-    const [dbOrmOptions, setDbOrmOptions] = useState<string[]>([]);
+    const [dbModal, setdbModal] = useState<boolean>(false);
 
-    useEffect(() => {
-        setSettings((prev: Settings) => ({
-            ...prev,
-            database_orm: initSettings.init_options.database_options[0].orm[0],
-            database: initSettings.init_options.database_options[0].name
-        }));
-        setDbOrmOptions(initSettings.init_options.database_options[0].orm);
-        //addSpecificPaq('mongoose');
-    }, [])
+    const openDbModal = () => {
+        setdbModal(true)
+    }
+
+    const closeDbModal = () => {
+        setdbModal(false)
+    }
 
     const handlePackSelectChange = (selected: any[]) => {
         let tab: Dependency[] = [];
@@ -51,7 +51,7 @@ const AppSettings = ({
             result => {
                 let tab: any[] = [];
                 const pack = result.data.objects.find((elem: any) => elem.package.name === search);
-                if(pack){
+                if (pack) {
                     setSettings((prev: Settings) => ({
                         ...prev,
                         dependencies: [...prev.dependencies, {
@@ -84,8 +84,9 @@ const AppSettings = ({
 
 
     return (
+        <>
         <ShadowBox>
-            <h5 style={{borderBottom: '1px solid #5c5c5c', padding: '.5rem' ,color: '#5c5c5c'}} >App settings</h5>
+            <h5 style={{ borderBottom: '1px solid #5c5c5c', padding: '.5rem', color: '#5c5c5c' }} >App settings</h5>
             <div className="d-flex flex-row flex-wrap">
                 <div className="p-2 col-sm-6 col-xs-12">
                     <Form.Label>Project Name:</Form.Label>
@@ -97,29 +98,6 @@ const AppSettings = ({
                         name="project_name"
                         onChange={onChangeSettings}
                     />
-                </div>
-                <div className="p-2 col-sm-6 col-xs-12">
-                    <Form.Group style={{ minWidth: "150px" }}>
-                        <Form.Label>Database</Form.Label>
-                        <Select
-                            options={initSettings.init_options.database_options}
-                            name="database"
-                            displayAttr="name"
-                            value={settings.database}
-                            onChange={onChangeSettings}
-                        />
-                    </Form.Group>
-                </div>
-                <div className="p-2 col-sm-6 col-xs-12">
-                    <Form.Group style={{ minWidth: "150px" }}>
-                        <Form.Label>Database ORM/ODM</Form.Label>
-                        <Select
-                            options={dbOrmOptions}
-                            name="database_orm"
-                            value={settings.database_orm}
-                            onChange={onChangeSettings}
-                        />
-                    </Form.Group>
                 </div>
                 <div className="p-2 col-sm-6 col-xs-12">
                     <Form.Group style={{ width: "100%" }}>
@@ -138,8 +116,17 @@ const AppSettings = ({
                         />
                     </Form.Group>
                 </div>
+                <div className="p-2 col-sm-4 col-xs-6">
+                    <Button className="mr-2 outline d-flex db-btn" onClick={openDbModal} variant="outline-primary" style={{ boxShadow: '1px 1px 4px 1px rgb(0 0 0 / 20%)' }} >
+                        <img className='db-icon my-auto mx-1' alt='database' src={dbIcon} />
+                        Database
+                    </Button>
+                </div>
             </div>
         </ShadowBox>
+        <DatabaseSettings show={dbModal} closeModal={closeDbModal} settings={settings}
+            setSettings={setSettings} onChangeSettings={onChangeSettings}/>
+        </>
     )
 }
 

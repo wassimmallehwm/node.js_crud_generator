@@ -57,7 +57,9 @@ const Entities = ({
                 error = true
             else i++;
         }
-        if(error){
+        if(entities.find(elem => elem.entity_name === currentEntity?.entity_name)){
+            Toast("WARNING", "Entity name is duplicated !")
+        } else if(error){
             Toast("WARNING", "Field name is required !")
         } else if(checkIfDuplicateExists(currentEntity?.entity_fields)) {
             Toast("WARNING", "Field name is duplicated !")
