@@ -3,22 +3,25 @@ import { Button, Form } from 'react-bootstrap';
 import { APIService } from '../../services/api.service';
 import { ShadowBox, Select, MultipleSelect } from '../shared';
 import { Dependency, Settings } from '../../types';
-import initSettings from '../../initial_settings.json';
 import dbIcon from '../../assets/db.svg';
 import './app-settings.css';
 import DatabaseSettings from './database-settings/DatabaseSettings';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSettings } from '../../global/settings';
 
-interface AppSettingsProps {
-    settings: Settings;
-    onChangeSettings: any;
-    setSettings: any;
-}
+const AppSettings = () => {
 
-const AppSettings = ({
-    settings,
-    onChangeSettings,
-    setSettings
-}: AppSettingsProps) => {
+    const settings = useSelector((state: any) => state.settings.value)
+    const dispatch = useDispatch()
+
+    const onSetSettings = (payload: Settings) => {
+        dispatch(setSettings(payload))
+    }
+
+    const onChangeSettings = (e: any) => {
+        onSetSettings({ ...settings, [e.target.name]: e.target.value });
+    }
+
     const apiService = useRef(new APIService());
     const [options, setOptions] = useState<any>([]);
     const [optionsLoading, setOptionsLoading] = useState<boolean>(false);
@@ -37,10 +40,10 @@ const AppSettings = ({
         selected.forEach(element => {
             tab.push(new Dependency(element))
         });
-        setSettings((prev: Settings) => ({
-            ...prev,
+        onSetSettings({
+            ...settings,
             dependencies: tab
-        }))
+        })
     }
     const handlePackInputChange = (text: string, event: any) => {
         findPacks(text)
@@ -52,13 +55,13 @@ const AppSettings = ({
                 let tab: any[] = [];
                 const pack = result.data.objects.find((elem: any) => elem.package.name === search);
                 if (pack) {
-                    setSettings((prev: Settings) => ({
-                        ...prev,
-                        dependencies: [...prev.dependencies, {
+                    onSetSettings({
+                        ...settings,
+                        dependencies: [...settings.dependencies, {
                             name: pack.package.name,
                             version: pack.package.version
                         }]
-                    }))
+                    })
                 }
             },
             error => console.error(error)
@@ -85,47 +88,46 @@ const AppSettings = ({
 
     return (
         <>
-        <ShadowBox>
-            <h5 style={{ borderBottom: '1px solid #5c5c5c', padding: '.5rem', color: '#5c5c5c' }} >App settings</h5>
-            <div className="d-flex flex-row flex-wrap">
-                <div className="p-2 col-sm-6 col-xs-12">
-                    <Form.Label>Project Name:</Form.Label>
-                    <Form.Control
-                        type="text"
-                        style={{ width: "100%" }}
-                        placeholder="My awesome project"
-                        value={settings.project_name}
-                        name="project_name"
-                        onChange={onChangeSettings}
-                    />
-                </div>
-                <div className="p-2 col-sm-6 col-xs-12">
-                    <Form.Group style={{ width: "100%" }}>
-                        <Form.Label>Npm packages</Form.Label>
-                        <MultipleSelect
-                            isLoading={optionsLoading}
-                            onChange={handlePackSelectChange}
-                            onInputChange={handlePackInputChange}
-                            options={options}
-                            selected={settings.dependencies}
-                            placeholder="Search for a npm package..."
-                            labelKey={(option: any) => `${option.name} (${option.version})`}
-                            renderMenuItemChildren={(option: any) => (
-                                <span>{option.name} ({option.version})</span>
-                            )}
+            <ShadowBox>
+                <h5 style={{ borderBottom: '1px solid #5c5c5c', padding: '.5rem', color: '#5c5c5c' }} >App settings</h5>
+                <div className="d-flex flex-row flex-wrap">
+                    <div className="p-2 col-sm-6 col-xs-12">
+                        <Form.Label>Project Name:</Form.Label>
+                        <Form.Control
+                            type="text"
+                            style={{ width: "100%" }}
+                            placeholder="My awesome project"
+                            value={settings.project_name}
+                            name="project_name"
+                            onChange={onChangeSettings}
                         />
-                    </Form.Group>
+                    </div>
+                    <div className="p-2 col-sm-6 col-xs-12">
+                        <Form.Group style={{ width: "100%" }}>
+                            <Form.Label>Npm packages</Form.Label>
+                            <MultipleSelect
+                                isLoading={optionsLoading}
+                                onChange={handlePackSelectChange}
+                                onInputChange={handlePackInputChange}
+                                options={options}
+                                selected={settings.dependencies}
+                                placeholder="Search for a npm package..."
+                                labelKey={(option: any) => `${option.name} (${option.version})`}
+                                renderMenuItemChildren={(option: any) => (
+                                    <span>{option.name} ({option.version})</span>
+                                )}
+                            />
+                        </Form.Group>
+                    </div>
+                    <div className="p-2 col-sm-4 col-xs-6">
+                        <Button className="mr-2 outline d-flex db-btn" onClick={openDbModal} variant="outline-primary" style={{ boxShadow: '1px 1px 4px 1px rgb(0 0 0 / 20%)' }} >
+                            <img className='db-icon my-auto mx-1' alt='database' src={dbIcon} />
+                            Database
+                        </Button>
+                    </div>
                 </div>
-                <div className="p-2 col-sm-4 col-xs-6">
-                    <Button className="mr-2 outline d-flex db-btn" onClick={openDbModal} variant="outline-primary" style={{ boxShadow: '1px 1px 4px 1px rgb(0 0 0 / 20%)' }} >
-                        <img className='db-icon my-auto mx-1' alt='database' src={dbIcon} />
-                        Database
-                    </Button>
-                </div>
-            </div>
-        </ShadowBox>
-        <DatabaseSettings show={dbModal} closeModal={closeDbModal} settings={settings}
-            setSettings={setSettings} onChangeSettings={onChangeSettings}/>
+            </ShadowBox>
+            <DatabaseSettings show={dbModal} closeModal={closeDbModal}/>
         </>
     )
 }

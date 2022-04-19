@@ -3,24 +3,31 @@ import { Button, Form, Modal, Row } from 'react-bootstrap'
 import { DbConfig, Settings } from '../../../types';
 import { Select, Switch } from '../../shared'
 import initSettings from '../../../initial_settings.json';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSettings } from '../../../global/settings';
 
 interface DatabaseSettingsProps {
     show: any;
     closeModal: any;
-    settings: Settings;
-    onChangeSettings: any;
-    setSettings: any;
 }
 
 const DatabaseSettings = ({
     show,
-    closeModal,
-    settings,
-    onChangeSettings,
-    setSettings
+    closeModal
 }: DatabaseSettingsProps) => {
+
+    const settings: Settings = useSelector((state: any) => state.settings.value)
+    const dispatch = useDispatch()
+
+    const onSetSettings = (payload: Settings) => {
+        dispatch(setSettings(payload))
+    }
+    const onChangeSettings = (e: any) => {
+        onSetSettings({ ...settings, [e.target.name]: e.target.value });
+    }
+
     const [dbOrmOptions, setDbOrmOptions] = useState<string[]>([]);
-    const [dbConfig, setDbConfig] = useState<DbConfig>(initSettings.init_db_config);
+    const [dbConfig, setDbConfig] = useState<DbConfig>(settings.database_config);
 
     const onDbConfigSwitchChange = (e: any) => {
         setDbConfig((prev: any) => ({ ...prev, [e.target.name]: !prev[e.target.name] }))
@@ -31,11 +38,11 @@ const DatabaseSettings = ({
     }
 
     useEffect(() => {
-        setSettings((prev: Settings) => ({
-            ...prev,
+        onSetSettings({
+            ...settings,
             database_orm: initSettings.init_options.database_options[0].orm[0],
             database: initSettings.init_options.database_options[0].name
-        }));
+        })
         setDbOrmOptions(initSettings.init_options.database_options[0].orm);
     }, [])
 
@@ -46,7 +53,7 @@ const DatabaseSettings = ({
 
     const save = () => {
         if (!invalidConfig()) {
-            let dbConfigData: DbConfig = initSettings.init_db_config
+            let dbConfigData: DbConfig = new DbConfig(initSettings.init_db_config)
             if (dbConfig.auth) {
                 dbConfigData.auth = dbConfig.auth
                 dbConfigData.user = dbConfig.user
@@ -57,7 +64,8 @@ const DatabaseSettings = ({
                 dbConfigData.host = dbConfig.host
                 dbConfigData.port = dbConfig.port
             }
-            setSettings((prev: any) => ({ ...prev, database_config: dbConfigData }))
+            setDbConfig(dbConfigData)
+            onSetSettings({ ...settings, database_config: dbConfigData })
             closeModal()
         }
     }

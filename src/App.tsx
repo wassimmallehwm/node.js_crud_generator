@@ -11,19 +11,40 @@ import { AppGenerator } from './components/app-generator/AppGenerator';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Toast } from './utils/toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSettings, resetSettings } from './global/settings';
+import { setEntities, resetEntities } from './global/entities';
 
 toast.configure()
 
 function App() {
-  const [settings, setSettings] = useState<Settings>(new Settings(initSettings.init_settings));
-  const [entities, setEntities] = useState<Entity[]>([]);
+  //const [entities, setEntities] = useState<Entity[]>([]);
   const [entitiesLabels, setEntitiesLabels] = useState<string[]>([]);
   const [btnLoading, setBtnLoading] = useState<boolean>(false);
 
+  
+  const settings = useSelector((state: any) => state.settings.value)
+  const dispatchSettings = useDispatch()
 
-  const onChangeSettings = (e: any) => {
-    setSettings({ ...settings, [e.target.name]: e.target.value });
+  const onSetSettings = (payload: Settings) => {
+    dispatchSettings(setSettings(payload))
   }
+
+  const onResetSettings = () => {
+    dispatchSettings(resetSettings())
+  }
+  
+  const entities = useSelector((state: any) => state.entities.value)
+  const dispatchEntities = useDispatch()
+
+  const onSetEntities = (payload: Entity[]) => {
+    dispatchEntities(setEntities(payload))
+  }
+
+  const onResetEntities = () => {
+    dispatchEntities(resetEntities())
+  }
+
 
   useEffect(() => {
     const savedEntities = localStorage.getItem('entities');
@@ -32,7 +53,7 @@ function App() {
       setEntities(JSON.parse(savedEntities))
     }
     if(savedSettings && savedSettings != ''){
-      setSettings(JSON.parse(savedSettings))
+      onSetSettings(JSON.parse(savedSettings))
     }
   }, [])
 
@@ -51,9 +72,9 @@ function App() {
     localStorage.setItem('settings', JSON.stringify(settings))
   }, [entities, settings])
 
-  const resetSettings = () => {
-    setSettings(new Settings(initSettings.init_settings))
-    setEntities([])
+  const reset = () => {
+    onResetSettings()
+    onResetEntities()
   }
 
   const validAction = (doToast?: boolean) => {
@@ -95,7 +116,7 @@ function App() {
       </Row>
       <div className="d-flex flex-row flex-wrap">
         <div className="p-1 col-md-8" style={{ maxHeight: '430px' }}>
-          <AppSettings settings={settings} setSettings={setSettings} onChangeSettings={onChangeSettings} />
+          <AppSettings/>
         </div>
         <div className="p-1 col-md-4" style={{ maxHeight: '430px' }}>
           <Entities entitiesLabels={entitiesLabels} entities={entities} setEntities={setEntities} />
@@ -105,7 +126,7 @@ function App() {
         <Button className="mr-2" disabled={!validAction() || btnLoading} onClick={generateApp} variant="success" style={{ boxShadow: '1px 1px 4px 1px rgb(0 0 0 / 20%)' }} >
           {btnLoading ? 'Generating...' : 'Generate'}
         </Button>
-        <Button className="mr-2" onClick={resetSettings} variant="secondary" style={{ boxShadow: '1px 1px 4px 1px rgb(0 0 0 / 20%)' }} >
+        <Button className="mr-2" onClick={reset} variant="secondary" style={{ boxShadow: '1px 1px 4px 1px rgb(0 0 0 / 20%)' }} >
           Reset
         </Button>
       </div>
