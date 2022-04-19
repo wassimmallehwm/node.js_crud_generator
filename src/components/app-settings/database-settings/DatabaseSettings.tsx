@@ -51,15 +51,16 @@ const DatabaseSettings = ({
             (dbConfig.auth && (dbConfig.user == "" || dbConfig.pwd == ""))
     }
 
+
     const save = () => {
         if (!invalidConfig()) {
             let dbConfigData: DbConfig = new DbConfig(initSettings.init_db_config)
-            if (dbConfig.auth) {
+            if (dbConfig.auth && dbConfig.user !== "" && dbConfig.pwd !== "") {
                 dbConfigData.auth = dbConfig.auth
                 dbConfigData.user = dbConfig.user
                 dbConfigData.pwd = dbConfig.pwd
             }
-            if (dbConfig.remote) {
+            if (dbConfig.remote && dbConfig.host !== "" && dbConfig.port !== "") {
                 dbConfigData.remote = dbConfig.remote
                 dbConfigData.host = dbConfig.host
                 dbConfigData.port = dbConfig.port
@@ -70,10 +71,15 @@ const DatabaseSettings = ({
         }
     }
 
+    const onCloseModal = () => {
+        setDbConfig(settings.database_config)
+        closeModal()
+    }
+
     return (
         <Modal
             show={show}
-            onHide={closeModal}
+            onHide={onCloseModal}
             size="xl"
             aria-labelledby="contained-modal-title-vcenter"
             centered
@@ -212,7 +218,7 @@ const DatabaseSettings = ({
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={closeModal}>
+                <Button variant="secondary" onClick={onCloseModal}>
                     Cancel
                 </Button>
                 <Button disabled={invalidConfig()}
