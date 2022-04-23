@@ -8,6 +8,7 @@ import downIcon from '../../../assets/down.svg';
 import initSettings from '../../../initial_settings.json';
 import { Select, Switch } from '../../shared';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 
 interface FieldItemProps {
     field: Field;
@@ -17,7 +18,6 @@ interface FieldItemProps {
     onFieldRemove: any;
     onFieldTypeChange: any;
     toggleCollapse: any;
-    entitiesLabels: string[];
 }
 
 const FieldItem = ({
@@ -27,9 +27,9 @@ const FieldItem = ({
     onFieldChange,
     onFieldRemove,
     onFieldTypeChange,
-    toggleCollapse,
-    entitiesLabels
+    toggleCollapse
 }: FieldItemProps) => {
+    const entitiesLabels = useSelector((state: any) => state.entitiesLabels.value)
 
     const [fieldType, setFieldType] = useState<any>();
     const [complexType, setComplexType] = useState<boolean>(false);
@@ -79,7 +79,7 @@ const FieldItem = ({
                     />
                 </Form.Group>
                 <EntityButton aria-label="collapse field" className="mx-1" onClick={() => toggleCollapse(index)}>
-                    <img alt='collapse field' style={{width: '12px'}} src={field.collapsed ? upIcon : downIcon} />
+                    <img alt='collapse field' style={{ width: '12px' }} src={field.collapsed ? upIcon : downIcon} />
                 </EntityButton>
                 <EntityButton aria-label="remove field" className="mx-1" onClick={() => onFieldRemove(index)} color="#dc3545" hover="#d50014">
                     <img alt='remove field' src={xIcon}

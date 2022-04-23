@@ -5,6 +5,7 @@ import { EntityButton } from '../EntityButton';
 import FieldItem from '../field/FieldItem';
 import initSettings from '../../../initial_settings.json'
 import { Switch } from '../../shared';
+import { useEffect } from 'react';
 
 interface EntityModalProps {
     show: boolean;
@@ -12,7 +13,6 @@ interface EntityModalProps {
     closeModal: any;
     entity: Entity;
     setEntity: any;
-    entitiesLabels: string[];
 }
 
 const EntityModal = ({
@@ -20,8 +20,7 @@ const EntityModal = ({
     save,
     closeModal,
     entity,
-    setEntity,
-    entitiesLabels
+    setEntity
 }: EntityModalProps) => {
 
     const handleChange = (e: any) => {
@@ -95,6 +94,23 @@ const EntityModal = ({
             }
         })
     }
+
+    useEffect(() => {
+        if(entity && entity.entity_fields.length > 0){
+            setEntity((prev: Entity) => {
+                return {
+                    ...prev,
+                    entity_fields: prev.entity_fields.map((field: Field, i) => {
+                            return {
+                                ...field,
+                                collapsed: false
+                            }
+                        return field
+                    })
+                }
+            })
+        }
+    }, [show])
 
     return entity ? (
         <Modal
@@ -174,7 +190,7 @@ const EntityModal = ({
                         (field, i) => (
                             <FieldItem key={i} index={i} field={field} onFieldTypeChange={onFieldTypeChange}
                                 onFieldChange={onFieldChange} onFieldRemove={onFieldRemove} toggleCollapse={toggleCollapse}
-                                entitiesLabels={entitiesLabels} entityName={entity.entity_name}
+                                entityName={entity.entity_name}
                             />
                         )
                     )}

@@ -6,11 +6,13 @@ import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux';
 import settingsReducer from './global/settings'
 import entitiesReducer from './global/entities'
+import entitiesLabelsReducer from './global/entities-labels'
 
 const store = configureStore({
   reducer: {
     settings: settingsReducer,
-    entities: entitiesReducer
+    entities: entitiesReducer,
+    entitiesLabels: entitiesLabelsReducer
   }
 })
 
