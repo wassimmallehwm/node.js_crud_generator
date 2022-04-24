@@ -1,5 +1,5 @@
 import JSZip from "jszip";
-import { Entity } from "../../../../../../types";
+import { Entity } from "../../../../../../../types";
 import modelTemplate from "./template";
 
 class ModelsGenerator {

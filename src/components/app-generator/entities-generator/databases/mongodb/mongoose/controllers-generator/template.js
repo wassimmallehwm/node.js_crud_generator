@@ -1,16 +1,17 @@
 
 const controllerTemplate = (entity) => {
+  const entityName = entity.entity_name.charAt(0).toUpperCase() + entity.entity_name.toLocaleLowerCase().slice(1)
     const create = `
 module.exports.create = async(req, res) => {
   try {
-    const item = new ${entity.entity_name}(req.body);
+    const item = new ${entityName}(req.body);
 
     const result = await item.save();
     return res.status(200).json(result);
   } catch (err) {
-    console.error("${entity.entity_name} creation failed: " + err);
+    console.error("${entityName} creation failed: " + err);
     const { status, message } = errorHandler(err)
-    res.status(status).json({message, entity: '${entity.entity_name}'})
+    res.status(status).json({message, entity: '${entityName}'})
   }
 };
     `;
@@ -18,26 +19,26 @@ module.exports.create = async(req, res) => {
 module.exports.getAll = async(req, res) => {
   try {
     let query = req.query || {};
-    const result = await ${entity.entity_name}.find(query);
+    const result = await ${entityName}.find(query);
 
     return res.status(200).json(result);
   } catch (err) {
-    console.error("${entity.entity_name} getAll failed: " + err);
+    console.error("${entityName} getAll failed: " + err);
     const { status, message } = errorHandler(err)
-    res.status(status).json({message, entity: '${entity.entity_name}'})
+    res.status(status).json({message, entity: '${entityName}'})
   }
 };
 
 module.exports.getById = async(req, res) => {
   try {
     const { id } = req.params;
-    const result = await ${entity.entity_name}.findById(id);
+    const result = await ${entityName}.findById(id);
 
     return res.status(200).json(result);
   } catch (err) {
-    console.error("${entity.entity_name} getById failed: " + err);
+    console.error("${entityName} getById failed: " + err);
     const { status, message } = errorHandler(err)
-    res.status(status).json({message, entity: '${entity.entity_name}'})
+    res.status(status).json({message, entity: '${entityName}'})
   }
 };
     `;
@@ -46,13 +47,13 @@ module.exports.getById = async(req, res) => {
 module.exports.update = async(req, res) => {
   try {
     const { id } = req.params;
-    const result = await ${entity.entity_name}.findOneAndUpdate({ _id: id}, req.body, { new: true });
+    const result = await ${entityName}.findOneAndUpdate({ _id: id}, req.body, { new: true });
 
     return res.status(200).json(result);
   } catch (err) {
-    console.error("${entity.entity_name} update failed: " + err);
+    console.error("${entityName} update failed: " + err);
     const { status, message } = errorHandler(err)
-    res.status(status).json({message, entity: '${entity.entity_name}'})
+    res.status(status).json({message, entity: '${entityName}'})
   }
 };
     `;
@@ -62,12 +63,12 @@ module.exports.remove = async(req, res) => {
   try {
     const { id } = req.params;
 
-    const result = await ${entity.entity_name}.deleteOne({ _id: id});
+    const result = await ${entityName}.deleteOne({ _id: id});
     return res.status(200).json(result);
   } catch (err) {
-    console.error("${entity.entity_name} delete failed: " + err);
+    console.error("${entityName} delete failed: " + err);
     const { status, message } = errorHandler(err)
-    res.status(status).json({message, entity: '${entity.entity_name}'})
+    res.status(status).json({message, entity: '${entityName}'})
   }
 };
     `;
@@ -89,17 +90,17 @@ module.exports.getList = async(req, res) => {
         }
       }
 
-      const result = await ${entity.entity_name}.paginate({}, options);
+      const result = await ${entityName}.paginate({}, options);
       return res.status(200).json(result);
     } catch (err) {
-      console.error("${entity.entity_name} list failed: " + err);
+      console.error("${entityName} list failed: " + err);
       const { status, message } = errorHandler(err)
-      res.status(status).json({message, entity: '${entity.entity_name}'})
+      res.status(status).json({message, entity: '${entityName}'})
     }
 };
     ` : '';
 
-    return `const ${entity.entity_name} = require("./${entity.entity_name.toLocaleLowerCase()}.model");
+    return `const ${entityName} = require("./${entity.entity_name.toLocaleLowerCase()}.model");
     const errorHandler = require("../../utils/errorHandler");
       ${create}
       ${read}

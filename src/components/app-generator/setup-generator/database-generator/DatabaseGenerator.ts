@@ -1,11 +1,13 @@
 import JSZip from "jszip";
 import { Settings } from "../../../../types";
-import dbTemplate from "./template";
 
 class DatabaseGenerator {
 
-    static generateDatabase(settings: Settings, directory: JSZip){
+    static async generateDatabase(settings: Settings, directory: JSZip){
         const database = directory?.folder("database");
+        const db = settings.database.toLocaleLowerCase();
+        const orm = settings.database_orm.toLocaleLowerCase();
+        const {dbTemplate} = await import(`./${db}/${orm}`);
         database?.file("index.js", dbTemplate());
     }
 }

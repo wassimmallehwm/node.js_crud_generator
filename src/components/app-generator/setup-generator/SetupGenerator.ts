@@ -9,13 +9,13 @@ import { UtilsGenerator } from "./utils-generator";
 
 class SetupGenerator {
 
-    static generateSetup(settings: Settings, entities: Entity[], directory: JSZip){
+    static async generateSetup(settings: Settings, entities: Entity[], directory: JSZip){
         directory?.folder("public");
         directory.file("package.json", PackageGenerator.generatePackage(settings));
         directory.file(".env", EnvGenerator.generateEnv(settings));
         directory.file("index.js", IndexGenerator.generateIndex(settings));
         
-        DatabaseGenerator.generateDatabase(settings, directory);
+        await DatabaseGenerator.generateDatabase(settings, directory);
         MiddlewareGenerator.generateMiddleware(settings, entities, directory);
         UtilsGenerator.generateUtils(settings, entities, directory)
         

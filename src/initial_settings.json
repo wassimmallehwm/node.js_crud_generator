@@ -51,10 +51,17 @@
         {"name" : "dotenv", "version" : "^8.2.0"},
         {"name" : "express", "version" : "^4.17.1"},
         {"name" : "jsonwebtoken", "version" : "^8.5.1"},
-        {"name" : "mongoose", "version" : "^6.1.1"},
         {"name" : "mongoose-paginate", "version" : "^5.0.3"},
         {"name" : "morgan", "version" : "^1.10.0"}
     ],
+    "database_dependencies": {
+        "mongodb": {
+            "mongoose": {
+                "name": "mongoose",
+                "version": "^6.1.1"
+            }
+        }
+    },
     "field_types": [
         {
             "type": "String",

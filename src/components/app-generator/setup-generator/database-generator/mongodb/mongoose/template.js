@@ -1,4 +1,4 @@
-const dbTemplate = () => {
+export const dbTemplate = () => {
 
   return `const mongoose = require('mongoose');
     
@@ -16,4 +16,4 @@ const dbConnect = () => {
 module.exports = dbConnect;`
 }
 
-export default dbTemplate;
+//export default dbTemplate;

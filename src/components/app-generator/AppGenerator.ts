@@ -10,7 +10,7 @@ export class AppGenerator {
   static async generateApp(entities: Entity[], settings: Settings, callback: any) {
     try {
       var zip = new JSZip();
-      SetupGenerator.generateSetup(settings, entities, zip);
+      await SetupGenerator.generateSetup(settings, entities, zip);
       if (entities.length > 0) {
         await EntitiesGenerator.generateEntities(entities, settings, zip)
       }
@@ -20,10 +20,12 @@ export class AppGenerator {
           Toast('SUCCESS', 'Project generated successfully')
           callback();
         }).catch((error: any) => {
+          console.error("ERROR : ", error)
           Toast('ERROR', 'Project generation failed')
         });
     } catch (err) {
       callback()
+      console.error("err : ", err)
       Toast('ERROR', 'Project generation failed')
     }
 

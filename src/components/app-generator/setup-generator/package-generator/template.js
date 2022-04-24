@@ -8,6 +8,10 @@ const packTemplate = (settings) => {
         depArray.push(element)
       }
     });
+    
+    // add data access package by database and ORM
+    depArray.push(initSettings.database_dependencies[settings.database.toLocaleLowerCase()][settings.database_orm])
+    
     if (depArray.length > 0) {
         depArray.forEach((element, i) => {
             dependencies += depArray.length - 1 == i ?
