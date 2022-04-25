@@ -4,7 +4,7 @@ pipeline {
         stage("Installation") {
             steps {
                 echo 'Installing packages...'
-                nodejs('Node-16') {
+                nodejs('Node-14') {
                     sh 'npm install'
                 }
             }
