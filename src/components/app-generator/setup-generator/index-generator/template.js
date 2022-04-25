@@ -10,11 +10,11 @@ const dbConnect = require('./database');
 const globalMiddelwares = require('./middleware');
 
 globalMiddelwares(app, __dirname);
-dbConnect();
 
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.info('Listening on port ' + PORT);
+  await dbConnect(app);
 });`
 }
 

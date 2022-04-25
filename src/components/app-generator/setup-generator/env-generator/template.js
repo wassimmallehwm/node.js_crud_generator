@@ -11,8 +11,8 @@ const envTemplate = (settings) => {
   }
   const DB_URL = prefix + auth + host
 
-  return `APP_NAME = ${settings.project_name}
-DATABASE_URL = ${DB_URL}/${settings.project_name.replace(' ', '_')}
+  return `APP_NAME = ${settings.project_name.replace(' ', '_')}
+DATABASE_URL = ${DB_URL}
 PORT = 3300`;
 }
 

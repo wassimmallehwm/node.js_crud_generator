@@ -42,7 +42,7 @@
         "database_options": [
             {
                 "name": "mongoDB",
-                "orm": ["mongoose"]
+                "orm": ["mongoose", "mongodb"]
             }
         ]
     },
@@ -59,6 +59,10 @@
             "mongoose": {
                 "name": "mongoose",
                 "version": "^6.1.1"
+            },
+            "mongodb": {
+                "name": "mongodb",
+                "version": "^4.5.0"
             }
         }
     },

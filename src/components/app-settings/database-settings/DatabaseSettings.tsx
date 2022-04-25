@@ -23,6 +23,13 @@ const DatabaseSettings = ({
         dispatch(setSettings(payload))
     }
     const onChangeSettings = (e: any) => {
+        console.log("NAME :", e.target.name)
+        console.log("VALUe :", e.target.value)
+        if(e.target.name === "database"){
+            const options: string[] = initSettings.init_options.database_options.find((elem: any) => elem.name === e.target.value)?.orm || []
+            onSetSettings({ ...settings, database: e.target.value, database_orm: options[0] });
+            setDbOrmOptions(options);
+        }
         onSetSettings({ ...settings, [e.target.name]: e.target.value });
     }
 
@@ -40,10 +47,15 @@ const DatabaseSettings = ({
     useEffect(() => {
         onSetSettings({
             ...settings,
-            database_orm: initSettings.init_options.database_options[0].orm[0],
-            database: initSettings.init_options.database_options[0].name
+            database: settings.database || initSettings.init_options.database_options[0].name,
+            database_orm: settings.database_orm || initSettings.init_options.database_options[0].orm[0]
         })
-        setDbOrmOptions(initSettings.init_options.database_options[0].orm);
+        if(settings.database){
+            const options: string[] = initSettings.init_options.database_options.find((elem: any) => elem.name === settings.database)?.orm || []
+            setDbOrmOptions(options);
+        } else {
+            setDbOrmOptions(initSettings.init_options.database_options[0].orm);
+        }
     }, [])
 
     const invalidConfig = () => {

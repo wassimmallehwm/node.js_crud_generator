@@ -1,8 +1,8 @@
 const dbTemplate = () => {
     return `const mongoose = require('mongoose');
     
-    const dbConnect = () => {
-      mongoose.connect(process.env.DATABASE_URL, {
+    const dbConnect = (app) => {
+      mongoose.connect(process.env.DATABASE_URL + '/' + process.env.APP_NAME, {
           useNewUrlParser: true,
           useUnifiedTopology: true
       });
