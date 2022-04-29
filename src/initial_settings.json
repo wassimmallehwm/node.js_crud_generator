@@ -99,12 +99,12 @@
             "complex": false
         },
         {
-            "type": "mongoose.Schema.Types.ObjectId",
+            "type": "Entity",
             "label": "Entity",
             "complex": true
         },
         {
-            "type": "[mongoose.Schema.Types.ObjectId]",
+            "type": "Entity[]",
             "label": "Entity[]",
             "complex": true
         }

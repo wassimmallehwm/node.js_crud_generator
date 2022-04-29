@@ -1,3 +1,13 @@
+const getFieldType = (type) => {
+    if(type == "Entity"){
+        return "mongoose.Schema.Types.ObjectId"
+    }
+    if(type == "Entity[]"){
+        return "[mongoose.Schema.Types.ObjectId]"
+    }
+    return type
+}
+
 
 const modelTemplate = (entity) => {
     let entities = '';
@@ -15,7 +25,7 @@ const modelTemplate = (entity) => {
         let fieldRef = elem.field_ref && elem.field_ref != "" ?`
         ref: "${elem.field_ref}",` : '';
         entities += `${elem.field_name}: {
-        type: ${elem.field_type},
+        type: ${getFieldType(elem.field_type)},
         required: ${elem.field_required},
         unique: ${elem.field_unique},${fieldDefault}${fieldRef}
     },
