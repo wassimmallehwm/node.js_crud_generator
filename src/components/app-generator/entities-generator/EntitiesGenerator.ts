@@ -2,6 +2,7 @@ import JSZip from "jszip";
 import { Entity, Settings } from "../../../types";
 import { EntityIndexGenerator } from "./entity-index-generator";
 import { RoutesGenerator } from "./routes-generator";
+import { ValidationGenerator } from "./validation-generator";
 
 class EntitiesGenerator {
 
@@ -14,6 +15,7 @@ class EntitiesGenerator {
         entities.forEach(entity => {
             const entityFolder = modules?.folder(entity.entity_name.toLocaleLowerCase());
             EntityGenerator.generateEntity(entity, entityFolder);
+            ValidationGenerator.generateValidation(entity, entityFolder!)
             RoutesGenerator.generateRoute(entity, entityFolder!);
             EntityIndexGenerator.generateEntityIndex(entity, entityFolder!)
         })

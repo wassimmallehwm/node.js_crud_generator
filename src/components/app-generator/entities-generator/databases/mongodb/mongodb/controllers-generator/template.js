@@ -7,15 +7,16 @@ module.exports.create = async(req, res) => {
   try {
     const db = req.app.locals.db;
 
-    const queryResult = await db.collection('${collection}').insertOne(req.body)
+    const value = await createSchema.validateAsync(req.body)
+    const queryResult = await db.collection('${collection}').insertOne(value)
     const id = new ObjectId(queryResult.insertedId);
     const result = await db.collection('${collection}').findOne({_id: id})
 
     return res.status(200).json(result);
   } catch (err) {
     console.error("${entityName} creation failed: " + err);
-    const { status, message } = errorHandler(err)
-    res.status(status).json({message, entity: '${entityName}'})
+    const { status, message, field } = errorHandler(err)
+    res.status(status).json({message, field, entity: '${entityName}'})
   }
 };
     `;
@@ -55,13 +56,14 @@ module.exports.update = async(req, res) => {
   try {
     const db = req.app.locals.db;
     const id = new ObjectId(req.params.id);
-    const result = await db.collection('${collection}').findOneAndUpdate({ _id: id}, { $set: req.body }, {returnDocument: "after"});
+    const value = await updateSchema.validateAsync(req.body)
+    const result = await db.collection('${collection}').findOneAndUpdate({ _id: id}, { $set: value }, {returnDocument: "after"});
 
     return res.status(200).json(result.value);
   } catch (err) {
     console.error("${entityName} update failed: " + err);
-    const { status, message } = errorHandler(err)
-    res.status(status).json({message, entity: '${entityName}'})
+    const { status, message, field } = errorHandler(err)
+    res.status(status).json({message, field, entity: '${entityName}'})
   }
 };
     `;
@@ -111,6 +113,7 @@ module.exports.getList = async(req, res) => {
 
     return `const { ObjectId } = require('mongodb');
     const errorHandler = require("../../utils/errorHandler");
+    const { createSchema, updateSchema } = require('./${entity.entity_name.toLocaleLowerCase()}.validation');
       ${create}
       ${read}
       ${paginate}

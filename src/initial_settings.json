@@ -52,7 +52,8 @@
         {"name" : "express", "version" : "^4.17.1"},
         {"name" : "jsonwebtoken", "version" : "^8.5.1"},
         {"name" : "mongoose-paginate", "version" : "^5.0.3"},
-        {"name" : "morgan", "version" : "^1.10.0"}
+        {"name" : "morgan", "version" : "^1.10.0"},
+        {"name" : "joi", "version" : "^17.6.0"}
     ],
     "database_dependencies": {
         "mongodb": {
