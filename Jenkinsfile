@@ -6,6 +6,16 @@ pipeline {
     }
 
     stages {
+        stage("Initialize Devops") {
+            when {
+                expression {
+                    BRANCH_NAME == 'devops'
+                }
+            }
+            steps {
+                echo 'Init Devops branch...'
+            }
+        }
         stage("Installation") {
             steps {
                 echo 'Installing packages...'
