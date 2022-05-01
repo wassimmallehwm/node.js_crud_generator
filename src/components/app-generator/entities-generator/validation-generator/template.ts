@@ -17,17 +17,30 @@ export const validationTemplate = (fields: Field[]) => {
         }
     }
 
+    const getDefaultVal = (field: Field) => {
+        const type = field.field_type
+        if (type == "String" || type == "Date") {
+            return `'${field.field_default}'`
+        } else if (type == "String[]") {
+            let defaultArrVal = ''
+            field.field_default.split(',').forEach(elem => {
+                defaultArrVal += `'${elem}',`
+            })
+            return `[${defaultArrVal.slice(0, -1)}]`
+        } else if (type == "Number[]") {
+            return `[${field.field_default}]`
+        } else {
+            return field.field_default
+        }
+    }
+
     const getValidationFields = ({ isCreation }: any) => {
         let validationFields = '{';
         fields.forEach((field: Field) => {
             validationFields += `
         ${field.field_name}: Joi.${getFieldType(field.field_type)}`
             if (field.field_default && field.field_default != "") {
-                if (field.field_type == "String" || field.field_type == "Date") {
-                    validationFields += field.field_default && field.field_default != "" ? `.default('${field.field_default}')` : ''
-                } else {
-                    validationFields += field.field_default && field.field_default != "" ? `.default(${field.field_default})` : ''
-                }
+                validationFields += field.field_default && field.field_default != "" ? `.default(${getDefaultVal(field)})` : ''
             }
             if (isCreation) {
                 validationFields += field.field_required ? `.required()` : ''

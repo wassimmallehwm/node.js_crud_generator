@@ -5,23 +5,39 @@ const getFieldType = (type) => {
     if(type == "Entity[]"){
         return "[mongoose.Schema.Types.ObjectId]"
     }
+    if(type == "String[]"){
+        return "[String]"
+    }
+    if(type == "Number[]"){
+        return "[Number]"
+    }
     return type
 }
+
+const getDefaultVal = (field) => {
+    const type = field.field_type
+    if(type == "String" || type == "Date"){
+        return `'${field.field_default}'`
+    } else if(type == "String[]"){
+        let defaultArrVal = ''
+        field.field_default.split(',').forEach(elem => {
+            defaultArrVal += `'${elem}',`
+        })
+        return `[${defaultArrVal.slice(0, -1)}]`
+    } else if(type == "Number[]"){
+        return `[${field.field_default}]`
+    } else {
+        return field.field_default
+    }
+}
+
 
 
 const modelTemplate = (entity) => {
     let entities = '';
     entity.entity_fields.forEach(elem => {
-        let fieldDefault = '';
-        if(elem.field_default && elem.field_default != ""){
-            if(elem.field_type == "String"){
-                fieldDefault = `
-        default: "${elem.field_default}",`
-            } else {
-                fieldDefault = `
-        default: ${elem.field_default},`
-            }
-        }
+        let fieldDefault = `
+        default: "${getDefaultVal(elem)}",`
         let fieldRef = elem.field_ref && elem.field_ref != "" ?`
         ref: "${elem.field_ref}",` : '';
         entities += `${elem.field_name}: {

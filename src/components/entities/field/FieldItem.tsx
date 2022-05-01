@@ -9,6 +9,7 @@ import initSettings from '../../../initial_settings.json';
 import { Select, Switch } from '../../shared';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import DefaultValue from './default-value/DefaultValue';
 
 interface FieldItemProps {
     field: Field;
@@ -119,16 +120,12 @@ const FieldItem = ({
                                 <p className="ml-1 mb-2">Unique</p>
                             </div>
                         </Form.Group>
-                        <Form.Group style={{ margin: '.5rem 0' }}>
-                            <Form.Control
-                                type="text"
-                                style={{ width: "150px" }}
-                                placeholder="Default value"
-                                value={field.field_default}
-                                name="field_default"
-                                onChange={handleChange}
-                            />
-                        </Form.Group>
+                        {
+                            field.field_type && field.field_type !== "" && (
+                                <DefaultValue fieldValue={field.field_default} 
+                                fieldType={field.field_type} handleChange={handleChange} />
+                            )
+                        }
                         <Select
                             complex
                             style={{ width: "fit-content" }}
